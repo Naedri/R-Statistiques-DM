@@ -1,11 +1,11 @@
 # IMT-Statistiques
 
-Devoir Maison n°8 - Pr.Stabiou
+Devoir Maison n°8
+Professeur : Safouana Stabiou
 
 ## Auteurs
 
 Vincent Escoffier, Adrien Jallais, Théo Martel, Louis Muzellec.
-
 
 ## Dossiers
 
@@ -17,11 +17,22 @@ Vincent Escoffier, Adrien Jallais, Théo Martel, Louis Muzellec.
 
 ## Let's go
 
-## Installation
+### Installation
 
-[Préparez votre ordinateur](https://www.middleprofessor.com/files/applied-biostatistics_bookdown/_book/appendix-1-getting-started-with-r.html)
+
+Commencez par [préparer votre ordinateur](https://www.middleprofessor.com/files/applied-biostatistics_bookdown/_book/appendix-1-getting-started-with-r.html).
+Puis veuillez installer les packages suivants à partir de la console de RStudio :
+
+```R
+# Install from CRAN
+install.packages('rmarkdown')
+install.packages('tinytex')
+# Install TinyTeX
+tinytex::install_tinytex()
+```
+
 
 ### Lancement
 
-Après installation de R et de Rstudio, double-cliquez sur *IMT-Statistiques.Rproj*.
+Pour ouvrir le projet, double-cliquez sur *IMT-Statistiques.Rproj*.
 Lorsque la session est terminée, quittez R Studio. Si une fenêtre contextuelle vous demande si vous voulez enregistrer l'espace de travail, cliquez sur "Non". 

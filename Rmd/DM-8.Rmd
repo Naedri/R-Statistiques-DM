@@ -1,8 +1,23 @@
 ---
-title: "DM-8"
+title: "UE Probabilité et Statistique - Mathématiques"
+subtitle: "Devoir Maison n°8"
 author: "Vincent Escoffier, Adrien Jallais, Théo Martel, Louis Muzellec."
-date: "25/01/2022"
-output: html_document
+place: "IMT-Atlantique - FIL A2"
+date: "25 Janvier 2022"
+output:
+  pdf_document: 
+    latex_engine: xelatex  # More modern PDF typesetting engine
+    toc: yes
+  html_document: 
+    toc: yes
+    fig_caption: yes
+    fig_height: 8
+    fig_width: 10
+  word_document: 
+    toc: yes
+    fig_caption: yes
+    fig_height: 4
+    fig_width: 5
 ---
 
 ```{r setup, include=FALSE}
