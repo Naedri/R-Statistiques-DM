@@ -3,43 +3,132 @@ title: "UE Probabilité et Statistique - Mathématiques"
 subtitle: "Devoir Maison n°8"
 author: "Vincent Escoffier, Adrien Jallais, Théo Martel, Louis Muzellec."
 place: "IMT-Atlantique - FIL A2"
-date: "25 Janvier 2022"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "../output") })
 output:
   pdf_document: 
     latex_engine: xelatex  # More modern PDF typesetting engine
     toc: yes
-  html_document: 
-    toc: yes
-    fig_caption: yes
-    fig_height: 8
-    fig_width: 10
-  word_document: 
-    toc: yes
-    fig_caption: yes
-    fig_height: 4
-    fig_width: 5
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE, tidy.opts = list(width.cutoff = 79),
+  tidy = TRUE, fig.width = 6, fig.height = 6,
+  warning = FALSE, message = FALSE
+)
 ```
 
-## R Markdown
+## Préparation de l'environnement
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r packages_loading, results='hide'}
+library(readr)
+library(dplyr)
+library(DescTools)
 ```
 
-## Including Plots
+\newpage
+# Exercice 1
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r 1_cleaning, echo=FALSE, results='hide'}
+rm(list = ls(all = TRUE))
+data.frame(unlist("all"))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Description des données
+
+On importe les données avec la commande suivante :
+```{r 1_data_import, results='hide'}
+d1 <- read_delim("../data/donnees.exo1.csv", ";",
+  col_names = TRUE,
+  escape_double = FALSE, show_col_types = FALSE
+)
+```
+
+L'effectif des données est de `r dim(d1)[1]`.
+
+La table suivante résume la dispersion de nos données :
+```{r 1_data_description, echo=FALSE}
+summary(d1)
+```
+
+Il est admis que l'occurence des sinistres suit une loi de Poisson. Ainsi on note :
+
+* $X2$ : La valeur critique du khi-carré
+* $N$ : Le nombre d'événements observés
+* $α$ : Le niveau de signification
+
+## Calculer un intervalle de confiance 
+
+La formule de l'intervalle de confiance de Poisson est $IC = [0,5*X2²N, α/2, 0,5*X2²(N+1), 1-α/2]$ .
+
+On utilise les notations suivantes :
+```{r 1_notation}
+n <- sum(d1$sinistre)
+x <- sum(d1$id * d1$sinistre)
+lambda <- x / n
+```
+
+Afin de pouvoir afficher le graphique suivant :
+```{r 1_graph}
+exp <- dpois(d1$id, lambda) * n
+barplot(rbind(d1$sinistre, exp * n / sum(exp)),
+  names = d1$id, beside = TRUE,
+  col = c(hred, hblue), main = "Distribution des sinistres",
+  xlab = "Contrats"
+)
+legend("topright",
+  legend = c("observée", "attendue"),
+  fill = c(hred, hblue), bg = "white"
+)
+```
+
+Ce graphique nous permet d'illustrer le calcul des intervalles de confiances avec les commandes suivantes :
+```{r 1_IC}
+ICL <- PoissonCI(x = x, n = n, conf.level = 0.95, sides = "left")
+ICR <- PoissonCI(x = x, n = n, conf.level = 0.95, sides = "right")
+```
+
+L'intervalle de confiance à gauche est estimé à : `r round((ICL[1, "est"]), digits = 3)`.
+
+L'intervalle de confiance à droite est estimé à : `r round((ICR[1, "est"]), digits = 3)`.
+
+\newpage
+# Exercice 2
+
+```{r 2_cleaning, echo=FALSE, results='hide'}
+rm(list = ls(all = TRUE))
+data.frame(unlist("all"))
+```
+
+## Description du modèle de données
+
+\newpage
+# Exercice 3
+
+```{r 3_cleaning, echo=FALSE, results='hide'}
+rm(list = ls(all = TRUE))
+data.frame(unlist("all"))
+```
+
+## Description des données
+
+On importe les données avec les commandes suivantes :
+```{r 3_data_import, results='hide'}
+d3 <- read_delim("../data/donnees.exo3.csv", ";",
+  col_names = TRUE,
+  escape_double = FALSE, show_col_types = FALSE,
+  locale = locale(decimal_mark = ",")
+)
+d3$x <- as.numeric(d3$x)
+d3$y <- as.numeric(d3$y)
+d3 <- select(d3, x, y)
+```
+
+L'effectif des données est de `r dim(d3)[1]`.
+
+La table suivante résume la dispersion de nos données :
+```{r 3_data_description, echo=FALSE}
+summary(d3)
+```

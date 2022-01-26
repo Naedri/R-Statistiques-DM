@@ -21,11 +21,16 @@ Vincent Escoffier, Adrien Jallais, Théo Martel, Louis Muzellec.
 
 
 Commencez par [préparer votre ordinateur](https://www.middleprofessor.com/files/applied-biostatistics_bookdown/_book/appendix-1-getting-started-with-r.html).
-Puis veuillez installer les packages suivants à partir de la console de RStudio :
+Puis installez les packages suivants à partir de la console R :
 
 ```R
 # Install from CRAN
-install.packages('rmarkdown')
+## code style stuff
+install.packages('styler')
+install.packages('lintr')
+## markdown stuff
+install.packages("knitr")
+install.packages("rmarkdown") 
 install.packages('tinytex')
 # Install TinyTeX
 tinytex::install_tinytex()
