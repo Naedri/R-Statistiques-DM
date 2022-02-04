@@ -1,6 +1,8 @@
 # IMT-Statistiques
 
-Devoir Maison n°8
+Analyse et modélisation statistiques de simples jeux de de données.
+
+Devoir-Maison : 8
 Professeur : Safouana Stabiou
 
 ## Auteurs
