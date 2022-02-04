@@ -21,7 +21,6 @@ Vincent Escoffier, Adrien Jallais, Théo Martel, Louis Muzellec.
 
 ### Installation
 
-
 Commencez par [préparer votre ordinateur](https://www.middleprofessor.com/files/applied-biostatistics_bookdown/_book/appendix-1-getting-started-with-r.html).
 Puis installez les packages suivants à partir de la console R :
 
@@ -38,8 +37,15 @@ install.packages('tinytex')
 tinytex::install_tinytex()
 ```
 
-
 ### Lancement
 
 Pour ouvrir le projet, double-cliquez sur *IMT-Statistiques.Rproj*.
 Lorsque la session est terminée, quittez R Studio. Si une fenêtre contextuelle vous demande si vous voulez enregistrer l'espace de travail, cliquez sur "Non". 
+
+## Références pédagogiques
+
+- Fiche de cours : [wikistat](http://wikistat.fr/)
+- Visualisations intéractives
+  - générale :  [seeing-theory](https://seeing-theory.brown.edu/)
+  - intervalles de confiance : [rpsychologist](https://rpsychologist.com/viz)
+- Rédaction en markdown : [Analyses et modélisation des données écologiques](https://pmarchand1.github.io/ECL7102/)
