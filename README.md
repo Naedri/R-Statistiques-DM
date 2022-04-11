@@ -26,6 +26,8 @@ Puis installez les packages suivants à partir de la console R :
 
 ```R
 # Install from CRAN
+## Rtools
+install.Rtools()
 ## code style stuff
 install.packages('styler')
 install.packages('lintr')
