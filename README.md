@@ -3,6 +3,7 @@
 Analyse et modélisation statistiques de simples jeux de de données.
 
 Devoir-Maison : 8
+
 Professeur : Safouana Stabiou
 
 ## Auteurs
@@ -42,7 +43,7 @@ tinytex::install_tinytex()
 ### Lancement
 
 Pour ouvrir le projet, double-cliquez sur *IMT-Statistiques.Rproj*.
-Lorsque la session est terminée, quittez R Studio. Si une fenêtre contextuelle vous demande si vous voulez enregistrer l'espace de travail, cliquez sur "Non". 
+Lorsque la session est terminée, quittez R Studio. Si une fenêtre contextuelle vous demande d'enregistrer l'espace de travail, cliquez sur "Non". 
 
 ## Références pédagogiques
 
@@ -51,3 +52,14 @@ Lorsque la session est terminée, quittez R Studio. Si une fenêtre contextuelle
   - générale :  [seeing-theory](https://seeing-theory.brown.edu/)
   - intervalles de confiance : [rpsychologist](https://rpsychologist.com/viz)
 - Rédaction en markdown : [Analyses et modélisation des données écologiques](https://pmarchand1.github.io/ECL7102/)
+
+## Méthodologie
+
+La démarche générale qui sera suivie pour la réalisation des tests statistiquse pourra se décomposer en 7 étapes :
+1. Poser un modèle : quelle(s) variables sont étudiées ? Quelles sont leur loi ? Comment traduire la question en terme de paramètres du modèle ?
+2. Formulation des hypothèses H0/H1.
+3. Choix d'une statistique de test et détermination de sa loi sous H0.
+4. Choix du risque de première espèce α (appelé aussi niveau) et dé?nition de la zone de rejet
+5. Calcul de la valeur observée de la statistique
+6. Calcul de la p-value
+7. Conclusion statistique (rejet ou non rejet de H0) et biologique (réponse à la question posée)
