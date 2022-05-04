@@ -32,6 +32,8 @@ install.Rtools()
 ## code style stuff
 install.packages('styler')
 install.packages('lintr')
+## dev tools
+install.packages("tidyverse")
 ## markdown stuff
 install.packages("knitr")
 install.packages("rmarkdown") 

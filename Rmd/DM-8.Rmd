@@ -25,10 +25,12 @@ knitr::opts_chunk$set(
 ```{r packages_loading, results='hide'}
 library(readr)
 library(dplyr)
+library(ggplot2)
 library(DescTools)
 ```
 
 \newpage
+
 # Exercice 1
 
 ```{r 1_cleaning, echo=FALSE, results='hide'}
@@ -36,65 +38,77 @@ rm(list = ls(all = TRUE))
 data.frame(unlist("all"))
 ```
 
+## Contexte
+
+Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré. Les mesures de l'échantillon sont entières. Il est admis que l'occurence des sinistres $X$ suit une loi de Poisson pour laquelle on recherche le paramètre inconnu $\lambda$.
+
 ## Description des données
 
 On importe les données avec la commande suivante :
+
 ```{r 1_data_import, results='hide'}
-d1 <- read_delim("../data/donnees.exo1.csv", ";",
-  col_names = TRUE,
-  escape_double = FALSE, show_col_types = FALSE
-)
+d1 <- read_delim("../data/donnees.exo1.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE, show_col_types = FALSE)
 ```
 
-L'effectif des données est de `r dim(d1)[1]`.
+L'effectif de l'échantillon est de `r dim(d1)[1]`. Celui-ci peut donc être considéré de grande taille.
 
-La table suivante résume la dispersion de nos données :
-```{r 1_data_description, echo=FALSE}
-summary(d1)
+Les indicateurs et le graphe suivant résument la dispersion de nos données :
+
+```{r 1_data_description, echo=FALSE, fig.asp = .62}
+summary(d1$sinistre)
+ggplot(d1, aes(x=sinistre)) + geom_bar()
 ```
 
-Il est admis que l'occurence des sinistres suit une loi de Poisson. Ainsi on note :
+On a également $X$ :
 
-* $X2$ : La valeur critique du khi-carré
-* $N$ : Le nombre d'événements observés
-* $α$ : Le niveau de signification
+-   $X2$ : La valeur critique du khi-carré
+-   $N$ : Le nombre d'événements observés
+-   $\alpha$ : Le niveau de signification
 
-## Calculer un intervalle de confiance 
 
-La formule de l'intervalle de confiance de Poisson est $IC = [0,5*X2²N, α/2, 0,5*X2²(N+1), 1-α/2]$ .
+A partir de $\overline{X} =$ `r dim(d1)[1]`, on a $n \overline{X_n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
 
-On utilise les notations suivantes :
-```{r 1_notation}
-n <- sum(d1$sinistre)
-x <- sum(d1$id * d1$sinistre)
-lambda <- x / n
-```
+Le modèle de nos données est le suivant : ???.
 
-Afin de pouvoir afficher le graphique suivant :
-```{r 1_graph}
-exp <- dpois(d1$id, lambda) * n
-barplot(rbind(d1$sinistre, exp * n / sum(exp)),
-  names = d1$id, beside = TRUE,
-  col = c(hred, hblue), main = "Distribution des sinistres",
-  xlab = "Contrats"
-)
-legend("topright",
-  legend = c("observée", "attendue"),
-  fill = c(hred, hblue), bg = "white"
-)
-```
+## Calcul d'un interval de confiance $IC$ unilatéral de niveau 95% pour $\lambda$
 
-Ce graphique nous permet d'illustrer le calcul des intervalles de confiances avec les commandes suivantes :
-```{r 1_IC}
-ICL <- PoissonCI(x = x, n = n, conf.level = 0.95, sides = "left")
-ICR <- PoissonCI(x = x, n = n, conf.level = 0.95, sides = "right")
-```
+Comme ???, on peut approximer la loi de Poisson par une loi Normale centrée réduite $N(0,1)$ par : 
 
-L'intervalle de confiance à gauche est estimé à : `r round((ICL[1, "est"]), digits = 3)`.
+\[\frac{\sqrt{n}(Xn - \lambda)}{\sqrt{Xn}} \rightarrow  N(0,1)\]
 
-L'intervalle de confiance à droite est estimé à : `r round((ICR[1, "est"]), digits = 3)`.
+Avec cette approximation, on peut en déduire un intervalle de confiance ($IC$) asymptotique (car $n =$ `r dim(d1)[1]` $< 100$).
+
+### $IC_g$ asymptotique gauche 
+
+On obtient un $IC$ tel que : 
+
+\[IC^{1-\alpha \space asymp}_{\underline{X_n}}(\lambda) =  \left[\overline{X_n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X_n}}{n}} <  \lambda \right] \space : (1)\]
+\[(1) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,543 - Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
+\[(1) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,543 - 1,96 \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
+\[(1) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,298 <  \lambda \right] \]
+
+### $IC_d$ asymptotique droit 
+
+On obtient un  tel que : 
+
+\[IC^{1+\alpha \space asymp}_{\underline{X_n}}(\lambda) =  \left[\overline{X_n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X_n}}{n}} >  \lambda \right] \space : (2)\]
+\[(2) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,543 + Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
+\[(2) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,543 + 1,96 \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
+\[(2) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,787 >  \lambda \right] \]
+
+## Peut-on accepter l’hypothèse que $\lambda = 1$ ? 
+
+On pose $H_0 : \lambda = 1$ et $ H_1 : \lambda \ne 1$.
+On ne peut accepter $H_0$, car $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$, autrement dit  $\lambda \notin  \left[0.298 ; 0.787 \right]$ 
+
+On peut vérifer cette négation, avec l'estimateur $W^{-\alpha}_{\underline{X_n}}(\lambda)$ de la manière suivante  : 
+
+\[W^{\alpha}_{\underline{X_n}}(\lambda) = \left[ \frac{\underline{X_n}}{\overline{X_n}} < a_{\alpha} \right]  \space \text{ ou } \space  W^{\alpha}_{\underline{X_n}}(\lambda) = \left[ \overline{X_n} > b_{\alpha} \right]\]
+\[P_{\lambda=1} (W^{-\alpha}_{\underline{X_n}}(\lambda)) \le \alpha \space \text{ et } \space P_{\lambda \ne 1} (W^{\alpha}_{\underline{X_n}}(\lambda)) \ge \alpha\]
 
 \newpage
+
 # Exercice 2
 
 ```{r 2_cleaning, echo=FALSE, results='hide'}
@@ -105,6 +119,7 @@ data.frame(unlist("all"))
 ## Description du modèle de données
 
 \newpage
+
 # Exercice 3
 
 ```{r 3_cleaning, echo=FALSE, results='hide'}
@@ -112,9 +127,14 @@ rm(list = ls(all = TRUE))
 data.frame(unlist("all"))
 ```
 
+## Contexte
+
+Nous introduisons les variables $x$, $A$, $S$, $E$, $Y$, $\theta$, et $Z$ comme suit : Une expérience chimique consiste à ajouter une dose $x$ d'un agent $A$ dans une solution $S$. Après réaction, on mesure la quantité d'une espèce $E$. Pour $x$ donné, on suppose qu'il est pertinent de représenter cette mesure par une variable aléatoire $Y = \theta x^2 + aZ$, $a$ connu, $\theta$ un paramètre réel inconnu et $Z$ une variable aléatoire normale centrée réduite.
+
 ## Description des données
 
 On importe les données avec les commandes suivantes :
+
 ```{r 3_data_import, results='hide'}
 d3 <- read_delim("../data/donnees.exo3.csv", ";",
   col_names = TRUE,
@@ -129,6 +149,7 @@ d3 <- select(d3, x, y)
 L'effectif des données est de `r dim(d3)[1]`.
 
 La table suivante résume la dispersion de nos données :
+
 ```{r 3_data_description, echo=FALSE}
 summary(d3)
 ```
