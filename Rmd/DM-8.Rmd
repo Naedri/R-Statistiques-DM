@@ -22,11 +22,12 @@ knitr::opts_chunk$set(
 
 ## Préparation de l'environnement
 
+R et Rstudio seront utilisés pour la rédaction de ce DM, ainsi que les packagessuivants :
+
 ```{r packages_loading, results='hide'}
 library(readr)
 library(dplyr)
 library(ggplot2)
-library(DescTools)
 ```
 
 \newpage
@@ -60,7 +61,7 @@ summary(d1$sinistre)
 ggplot(d1, aes(x=sinistre)) + geom_bar()
 ```
 
-A partir de $\overline{X} =$ `r dim(d1)[1]`, on a $n \overline{X_n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
+A partir de $\overline{X} =$ `r dim(d1)[1]`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
 
 ## Intervalle de confiance ($IC$) asymptotique pour $\lambda$
 
@@ -74,19 +75,19 @@ Avec cette approximation, on peut en déduire un intervalle de confiance ($IC$) 
 
 On obtient un $IC$ tel que : 
 
-\[IC^{1-\alpha \text{ asymp }}_{\underline{X_n}}(\lambda) =  \left[\overline{X_n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X_n}}{n}} <  \lambda \right] \space : (1)\]
-\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,543 - Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
-\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,543 - 1,96 \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
-\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,298 <  \lambda \right] \]
+\[IC^{1-\alpha \text{ asymp }}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} <  \lambda \right] \space : (1)\]
+\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 - Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
+\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 - 1,96 \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
+\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,298 <  \lambda \right] \]
 
 ### 1. Calcul d'un interval de confiance asymptotique unilatéral droit de niveau 95% pour $\lambda$ ($IC_d$)
 
 On obtient un  tel que : 
 
-\[IC^{1+\alpha \text{ asymp }}_{\underline{X_n}}(\lambda) =  \left[\overline{X_n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X_n}}{n}} >  \lambda \right] \space : (2)\]
-\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,543 + Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
-\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,543 + 1,96 \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
-\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,787 >  \lambda \right] \]
+\[IC^{1+\alpha \text{ asymp }}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} >  \lambda \right] \space : (2)\]
+\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 + Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
+\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 + 1,96 \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
+\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,787 >  \lambda \right] \]
 
 ## Peut-on accepter l’hypothèse que $\lambda = 1$ ? 
 
@@ -108,10 +109,10 @@ Par conséquent, on a $\lambda \ne 1$.
 
 ### Commentaires
 
-On peut vérifer cette négation, avec l'estimateur $W^{-\alpha}_{\underline{X_n}}(\lambda)$ de la manière suivante  : 
+On peut vérifer cette négation, avec l'estimateur $W^{-\alpha}_{\underline{X}_{n}}(\lambda)$ de la manière suivante  : 
 
-\[W^{\alpha}_{\underline{X_n}}(\lambda) = \left[ \frac{\underline{X_n}}{\overline{X_n}} < a_{\alpha} \right]  \space \text{ ou } \space  W^{\alpha}_{\underline{X_n}}(\lambda) = \left[ \overline{X_n} > b_{\alpha} \right]\]
-\[P_{\lambda=1} (W^{-\alpha}_{\underline{X_n}}(\lambda)) \le \alpha \space \text{ et } \space P_{\lambda \ne 1} (W^{\alpha}_{\underline{X_n}}(\lambda)) \ge \alpha\]
+\[W^{\alpha}_{\underline{X}_{n}}(\lambda) = \left[ \frac{\underline{X}_{n}}{\overline{X}_{n}} < a_{\alpha} \right]  \space \text{ ou } \space  W^{\alpha}_{\underline{X}_{n}}(\lambda) = \left[ \overline{X}_{n} > b_{\alpha} \right]\]
+\[P_{\lambda=1} (W^{-\alpha}_{\underline{X}_{n}}(\lambda)) \le \alpha \space \text{ et } \space P_{\lambda \ne 1} (W^{\alpha}_{\underline{X}_{n}}(\lambda)) \ge \alpha\]
 
 \newpage
 
@@ -144,13 +145,13 @@ Dans notre observation ponctuelle (lot), on a observé que la proportion de piè
 
 \[H_0 : p_0 \le 0,1 \text{ contre } H_1 : p_0 > 0,1\]
 
-\[W^{\alpha \text{ asymp }}_{X_n}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > p + \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
-\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > 0,1 + \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
-\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > 0,1496 \right\} \]
+\[W^{\alpha \text{ asymp }}_{X_n}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > p + \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
+\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1 + \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
+\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1496 \right\} \]
 
 ### Observations
 
-\[\frac{\underline{X_n}}{\overline{X_n}} = 0,0857 \notin W^{\alpha \text{ asymp }}_{X_n}(p)\]
+\[\frac{\underline{X}_{n}}{\overline{X}_{n}} = 0,0857 \notin W^{\alpha \text{ asymp }}_{X_n}(p)\]
 
 ### Décision
 
@@ -166,13 +167,13 @@ Jusqu'à preuve du contraire, le client acceptera le lot.
 
 \[H_0 : p_0 \ge 0,1 \text{ contre } H_1 : p_0 < 0,1\]
 
-\[W^{\alpha \text{ asymp }}_{X_n}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > p - \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
-\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > 0,1 - \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
-\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > 0,0503 \right\} \]
+\[W^{\alpha \text{ asymp }}_{X_n}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > p - \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
+\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1 - \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
+\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,0503 \right\} \]
 
 ### Observations
 
-\[\frac{\underline{X_n}}{\overline{X_n}} = 0,0857 \notin W^{\alpha \text{ asymp }}_{X_n}(p)\]
+\[\frac{\underline{X}_{n}}{\overline{X}_{n}} = 0,0857 \notin W^{\alpha \text{ asymp }}_{X_n}(p)\]
 
 ### Décision
 
@@ -186,7 +187,7 @@ Jusqu'à preuve du contraire, le client n'acceptera pas le lot.
 
 L'acceptation du lot a été évaluée depuis les points de vues des deux parties.
 
-**On se place du point de vue du client, il ne faudrait donc pas tester $TH_2$ mais seulement $TH_1$. En effet, en se placant du côté du client, on souhaite seulement évaluer ce que craint le client de rejeter à tords **
+**On se place du point de vue du client, il ne faudrait donc pas tester $TH_2$ mais seulement $TH_1$. En effet, en se placant du côté du client, on souhaite seulement évaluer ce que craint le client de rejeter à tord.**
 
 \newpage
 
@@ -199,9 +200,16 @@ data.frame(unlist("all"))
 
 ## Contexte
 
-Nous introduisons les variables $x$, $A$, $S$, $E$, $Y$, $\theta$, et $Z$ comme suit : Une expérience chimique consiste à ajouter une dose $x$ d'un agent $A$ dans une solution $S$. Après réaction, on mesure la quantité d'une espèce $E$. Pour $x$ donné, on suppose qu'il est pertinent de représenter cette mesure par une variable aléatoire $Y = \theta x^2 + aZ$, $a$ connu, $\theta$ un paramètre réel inconnu et $Z$ une variable aléatoire normale centrée réduite.
+Nous introduisons les variables $x$, $A$, $S$, $E$, $Y$, $\theta$, et $Z$ comme suit : 
+Une expérience chimique consiste à ajouter une dose $x$ d'un agent $A$ dans une solution $S$. Après réaction, on mesure la quantité d'une espèce $E$. Pour $x$ donné, on suppose qu'il est pertinent de représenter cette mesure par une variable aléatoire $Y = \theta x^2 + aZ$, $a$ connu, $\theta$ un paramètre réel inconnu et $Z$ une variable aléatoire normale centrée réduite.
 
-## Description des données
+## Estimation du paramètre $\theta$
+
+Pour estimer le paramètre $\theta$, on fait $n(n \ge 1)$ essais indépendants avec des doses $X_1, \ldots X_n$ données de l’agent $A$. On extrait donc un échantillon aléatoire bernoullien $Y_n$ de $Y$ .
+
+## Estimation ponctuelle du paramètre $\theta$
+
+### Description des données
 
 ```{r 3_data_import, echo=FALSE, results='hide'}
 # On importe les données avec les commandes suivantes
@@ -219,7 +227,7 @@ La table suivante résume la dispersion de nos données :
 summary(d3)
 ```
 
-Le graphique, ci dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x^2$ :
+Le graphique, ci dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x²$ :
 
 ```{r 3_correlation, echo=FALSE, fig.asp = .63}
 d3 <- dplyr::mutate(d3, x2 = d3$x * d3$x)
@@ -228,5 +236,5 @@ library("ggpubr")
 ggscatter(d3, x = "x2", y = "y", 
           add = "reg.line", conf.int = TRUE, 
           cor.coef = TRUE, cor.method = "pearson",
-          xlab = "Agent A (x²)", ylab = "Effectif E")
+          xlab = "Agent A (x²)", ylab = "Espèce E (Y)")
 ```
