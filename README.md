@@ -34,6 +34,8 @@ install.packages('styler')
 install.packages('lintr')
 ## dev tools
 install.packages("tidyverse")
+## plot tools for beginners in R programming 
+install.packages("ggpubr")
 ## markdown stuff
 install.packages("knitr")
 install.packages("rmarkdown") 
