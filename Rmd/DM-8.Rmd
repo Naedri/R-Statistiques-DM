@@ -205,7 +205,30 @@ Une expérience chimique consiste à ajouter une dose $x$ d'un agent $A$ dans un
 
 ## Estimation du paramètre $\theta$
 
-Pour estimer le paramètre $\theta$, on fait $n(n \ge 1)$ essais indépendants avec des doses $X_1, \ldots X_n$ données de l’agent $A$. On extrait donc un échantillon aléatoire bernoullien $Y_n$ de $Y$ .
+Pour estimer le paramètre $\theta$, on fait $n(n \ge 1)$ essais indépendants avec des doses de l’agent $A$ notées $X_1, \ldots X_n$. De $Y$, on extrait donc un échantillon aléatoire bernoullien $Y_n = (Y_1 \ldots Y_n)$.
+
+### Modèle statistique associé à $Y_n$
+
+### Calcul
+
+On pose le modèle statistique suivant à deux paramètres : 
+\[( \mathbb{R}^n,  \otimes_{i=1}^{n} N(\theta x^2, a^2)_{(\theta, a) \in \mathbb{R}^{2} \times ]0;+\infty[})\]
+
+Avec pour vraissemblance : 
+\[L(Y_{\underline{X}_n}, \theta, a^2) = (2 \pi a^2)^{\frac{-n}{2}} \times e^{\frac{\sum_{i = 1}^{n} (Y_i - \theta_{i}^{2})^2}{2a^2}}\]
+
+Et avec pour comme régularité : 
+\[ log L(Y_{\underline{X}_n}, \theta, a^2) ) = log(2\pi)^{\frac{-n}{2}} - \frac{n}{2} \ln x - \frac{\sum_{i=1}^{n} (Y_i - \theta_{i}^{2})^2}{2a^2}  = g(\theta, a^2)\]
+
+### Calcul de la borne de Cramer-Rao pour $\theta$
+
+### Calcul de $\hat{\theta}_n$
+
+### Démonstration de $\hat{\theta}_n$ en tant qu'estimateur efficace de $\theta$
+
+### Identification de la loi de $\hat{\theta}_n$
+
+### Calcul d'un intervalle de confiance ($IC$) de niveau $1-\alpha$ pour $\theta$
 
 ## Estimation ponctuelle du paramètre $\theta$
 
@@ -227,14 +250,33 @@ La table suivante résume la dispersion de nos données :
 summary(d3)
 ```
 
-Le graphique, ci dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x²$ :
-
-```{r 3_correlation, echo=FALSE, fig.asp = .63}
+```{r 3_correlation, echo=FALSE, results='hide'}
 d3 <- dplyr::mutate(d3, x2 = d3$x * d3$x)
+# regression line (y~x)
+Dr<-lm(formula = d3$y~d3$x2)
+a_coeff <- round(Dr$coefficients[2], digits = 2)
+b_coeff <- round(Dr$coefficients[1], digits = 2)
+model<-paste0("Y = ", a_coeff,"x² + ", b_coeff)
+```
+
+Le graphique, ci-dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x^2$, tel que $Y = aX + b$ avec $a=$ `r a_coeff` et $b=$ `r b_coeff`.
+
+```{r 3_graph, echo=FALSE, fig.asp = .63}
 # http://www.sthda.com/english/wiki/correlation-test-between-two-variables-in-r#visualize-your-data-using-scatter-plots
 library("ggpubr")
 ggscatter(d3, x = "x2", y = "y", 
           add = "reg.line", conf.int = TRUE, 
           cor.coef = TRUE, cor.method = "pearson",
+          title = model,
           xlab = "Agent A (x²)", ylab = "Espèce E (Y)")
 ```
+
+### Calcul d'une estimation ponctuelle de $\theta$
+
+
+
+### Calcul d'un intervalle de confiance ($IC$) de niveau 95%  pour $\theta$
+
+### Evaluation de la significativité de l'augmentation de $\theta$
+
+On souhaite savoir si l'on peut accepter au seuil de 5% l'hypothèse $H_0 : \theta > \theta_{passé} \Leftrightarrow H_0 : \theta > 0,9 $.
