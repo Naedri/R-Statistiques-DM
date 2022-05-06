@@ -40,13 +40,13 @@ data.frame(unlist("all"))
 
 ## Contexte
 
-Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré. Les mesures de l'échantillon sont entières. Il est admis que l'occurence des sinistres $X$ suit une loi de Poisson pour laquelle on recherche le paramètre inconnu $\lambda$.
+Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré. $X$ est une variables aléatoire discrète. Il est admis que l'occurence des sinistres $X$ suit une loi de Poisson pour laquelle on recherche le paramètre inconnu $\lambda$.
+Le modèle d'échantillonage de nos données est le suivant : $(\mathbb{N}, (\mathscr{P}_{\lambda})_{\lambda>0})^{n}$.
 
-## Description des données
+### Description des données
 
-On importe les données avec la commande suivante :
-
-```{r 1_data_import, results='hide'}
+```{r 1_data_import, echo=FALSE, results='hide'}
+# On importe les données avec la commande suivante
 d1 <- read_delim("../data/donnees.exo1.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE, show_col_types = FALSE)
 ```
@@ -55,52 +55,58 @@ L'effectif de l'échantillon est de `r dim(d1)[1]`. Celui-ci peut donc être con
 
 Les indicateurs et le graphe suivant résument la dispersion de nos données :
 
-```{r 1_data_description, echo=FALSE, fig.asp = .62}
+```{r 1_data_description, echo=FALSE, fig.asp = .40}
 summary(d1$sinistre)
 ggplot(d1, aes(x=sinistre)) + geom_bar()
 ```
 
-On a également $X$ :
-
--   $X2$ : La valeur critique du khi-carré
--   $N$ : Le nombre d'événements observés
--   $\alpha$ : Le niveau de signification
-
-
 A partir de $\overline{X} =$ `r dim(d1)[1]`, on a $n \overline{X_n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
 
-Le modèle de nos données est le suivant : ???.
-
-## Calcul d'un interval de confiance $IC$ unilatéral de niveau 95% pour $\lambda$
+## Intervalle de confiance ($IC$) asymptotique pour $\lambda$
 
 Comme ???, on peut approximer la loi de Poisson par une loi Normale centrée réduite $N(0,1)$ par : 
 
-\[\frac{\sqrt{n}(Xn - \lambda)}{\sqrt{Xn}} \rightarrow  N(0,1)\]
+\[\frac{\sqrt{n}(Xn - \lambda)}{\sqrt{Xn}} \leadsto N(0,1)\]
 
 Avec cette approximation, on peut en déduire un intervalle de confiance ($IC$) asymptotique (car $n =$ `r dim(d1)[1]` $< 100$).
 
-### $IC_g$ asymptotique gauche 
+### 1. Calcul d'un interval de confiance asymptotique unilatéral gauche de niveau 95% pour $\lambda$ ($IC_g$)
 
 On obtient un $IC$ tel que : 
 
-\[IC^{1-\alpha \space asymp}_{\underline{X_n}}(\lambda) =  \left[\overline{X_n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X_n}}{n}} <  \lambda \right] \space : (1)\]
-\[(1) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,543 - Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
-\[(1) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,543 - 1,96 \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
-\[(1) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,298 <  \lambda \right] \]
+\[IC^{1-\alpha \text{ asymp }}_{\underline{X_n}}(\lambda) =  \left[\overline{X_n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X_n}}{n}} <  \lambda \right] \space : (1)\]
+\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,543 - Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
+\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,543 - 1,96 \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
+\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,298 <  \lambda \right] \]
 
-### $IC_d$ asymptotique droit 
+### 1. Calcul d'un interval de confiance asymptotique unilatéral droit de niveau 95% pour $\lambda$ ($IC_d$)
 
 On obtient un  tel que : 
 
-\[IC^{1+\alpha \space asymp}_{\underline{X_n}}(\lambda) =  \left[\overline{X_n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X_n}}{n}} >  \lambda \right] \space : (2)\]
-\[(2) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,543 + Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
-\[(2) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,543 + 1,96 \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
-\[(2) \space \Leftrightarrow IC^{0,95 \space asymp}_{\underline{X_n}}(\lambda) = \left[0,787 >  \lambda \right] \]
+\[IC^{1+\alpha \text{ asymp }}_{\underline{X_n}}(\lambda) =  \left[\overline{X_n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X_n}}{n}} >  \lambda \right] \space : (2)\]
+\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,543 + Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
+\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,543 + 1,96 \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
+\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X_n}}(\lambda) = \left[0,787 >  \lambda \right] \]
 
 ## Peut-on accepter l’hypothèse que $\lambda = 1$ ? 
 
+### Test d'hypothèses
+
 On pose $H_0 : \lambda = 1$ et $ H_1 : \lambda \ne 1$.
-On ne peut accepter $H_0$, car $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$, autrement dit  $\lambda \notin  \left[0.298 ; 0.787 \right]$ 
+
+### Observations
+
+On a $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$, autrement dit $\lambda \notin \left[0.298;0.787 \right]$ .
+
+### Décision 
+
+On ne peut donc accepter $H_0$.
+
+### Conclusion 
+
+Par conséquent, on a $\lambda \ne 1$.
+
+### Commentaires
 
 On peut vérifer cette négation, avec l'estimateur $W^{-\alpha}_{\underline{X_n}}(\lambda)$ de la manière suivante  : 
 
@@ -116,7 +122,69 @@ rm(list = ls(all = TRUE))
 data.frame(unlist("all"))
 ```
 
+## Contexte
+
+Soit $X$, une variable aléatoire discrète représentant le nombre de pièces défectueuses par échantillon (représentée par une commande ou un lot). Les pièces peuvent être soient défectueuses, soient fonctionnelles. Notre échantillonage est donc extrait d'une épreuve de Bernouilli. La taille de l'échantillon est grande : $n > 100 \text{ avec } n = 140$.
+
+On souhaite savoir si le client acceptera cet echantillon, et pour cela il faut qu'il contienne au moins 120 composants fonctionnels.
+
 ## Description du modèle de données
+
+Notre échantillonnage aléatoire est simple tel que : $X_{n} = (X_{i})_{1 \le i \le n}$ avec le modèle suivant : $({0,1}(B(1,p)_{p})_{p \in [0,1]})$ sachant $p = 10\% = 0,1$.
+
+On va comparer ce paramètre avec une estimation ponctuelle, afin de savoir si l'affirmation du fabricant est vraie. Pour cela nous allons réaliser deux tests : le premier du point de vue du fabricant ($TH_1$), le second du point de vue du client ($TH_2$).
+
+## Observation ponctuelle
+
+Dans notre observation ponctuelle (lot), on a observé que la proportion de pièces défectueuses est de `r 12/40` (`= 12/40`).
+
+## Point de vue du fabricant ($TH_1$)
+
+### Test d'hypothèses
+
+\[H_0 : p_0 \le 0,1 \text{ contre } H_1 : p_0 > 0,1\]
+
+\[W^{\alpha \text{ asymp }}_{X_n}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > p + \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
+\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > 0,1 + \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
+\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > 0,1496 \right\} \]
+
+### Observations
+
+\[\frac{\underline{X_n}}{\overline{X_n}} = 0,0857 \notin W^{\alpha \text{ asymp }}_{X_n}(p)\]
+
+### Décision
+
+On accepte donc $H_0$ de $TH_1$.
+
+### Conlcusion
+
+Jusqu'à preuve du contraire, le client acceptera le lot.
+
+## Point de vue du client ($TH_2$)
+
+### Test d'hypothèses
+
+\[H_0 : p_0 \ge 0,1 \text{ contre } H_1 : p_0 < 0,1\]
+
+\[W^{\alpha \text{ asymp }}_{X_n}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > p - \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
+\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > 0,1 - \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
+\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X_n}}{\overline{X_n}} > 0,0503 \right\} \]
+
+### Observations
+
+\[\frac{\underline{X_n}}{\overline{X_n}} = 0,0857 \notin W^{\alpha \text{ asymp }}_{X_n}(p)\]
+
+### Décision
+
+On accepte donc $H_0$ $TH_2$.
+
+### Conlcusion
+
+Jusqu'à preuve du contraire, le client n'acceptera pas le lot.
+
+## Commentaires
+
+L'acceptation du lot a été évaluée depuis les points de vues des deux parties.
 
 \newpage
 
@@ -133,9 +201,8 @@ Nous introduisons les variables $x$, $A$, $S$, $E$, $Y$, $\theta$, et $Z$ comme 
 
 ## Description des données
 
-On importe les données avec les commandes suivantes :
-
-```{r 3_data_import, results='hide'}
+```{r 3_data_import, echo=FALSE, results='hide'}
+# On importe les données avec les commandes suivantes
 d3 <- read_delim("../data/donnees.exo3.csv", ";",
   col_names = TRUE,
   escape_double = FALSE, show_col_types = FALSE,
