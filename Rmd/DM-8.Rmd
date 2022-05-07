@@ -65,7 +65,7 @@ A partir de $\overline{X} =$ `r dim(d1)[1]`, on a $n \overline{X}_{n} =$ `r dim(
 
 ## Intervalle de confiance ($IC$) asymptotique pour $\lambda$
 
-Comme ???, on peut approximer la loi de Poisson par une loi Normale centrée réduite $N(0,1)$ par : 
+Comme **???**, on peut approximer la loi de Poisson par une loi Normale centrée réduite $N(0,1)$ par : 
 
 \[\frac{\sqrt{n}(Xn - \lambda)}{\sqrt{Xn}} \leadsto N(0,1)\]
 
@@ -230,13 +230,30 @@ Ainsi le modèle de $Y_n$, cité plus haut, est régulier.
 Pour $\theta$ on a la borne de Cramer-Rao suivante :
 \[I_{\underline{X}_n}(\theta)^{-1}= \frac{a^2}{nS^2_{\underline{X}_n}}\]
 
-### Calcul de $\hat{\theta}_n$
+### Calcul de l'EMV $\hat{\theta}_n$
+
+On a :
+
+\[EMV \space \hat{\theta}_n = \frac{\sum_{i=1}^{n}(x_i^2 - \overline{x_n^2})(Y_n - Y_i)}{nS_{X_n}^2}\]
+
+**??? Montrer que c'est une EMM e $\theta$???**
 
 ### Démonstration de $\hat{\theta}_n$ en tant qu'estimateur efficace de $\theta$
 
+**??? Need help here ???**
+
 ### Identification de la loi de $\hat{\theta}_n$
 
+On a $\hat{\theta}_n$ tel que : 
+\[\hat{\theta}_n \leadsto N(\theta_1, \frac{a^2}{nS^2_{\underline{X}_n}})\]
+
 ### Calcul d'un intervalle de confiance ($IC$) de niveau $1-\alpha$ pour $\theta$
+
+Soit l'intervalle de confiance ($IC$) de $\hat{\theta}_n$ tel que : 
+
+\[IC^{1-\alpha}_{Y_{\underline{X}_{n}}}(\theta) =  \left[ \theta - Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} ; \theta + Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}}  \right]\]
+
+**TODO : Mettre à jour les intervalles avec ';' et non ','**
 
 ## Estimation ponctuelle du paramètre $\theta$
 
@@ -267,7 +284,9 @@ b_coeff <- round(Dr$coefficients[1], digits = 2)
 model<-paste0("Y = ", a_coeff,"x² + ", b_coeff)
 ```
 
-Le graphique, ci-dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x^2$, tel que $Y = aX + b$ avec $a=$ `r a_coeff` et $b=$ `r b_coeff`.
+Le graphique, ci-dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x^2$, tel que $Y = ax² + b$ avec $a=$`r a_coeff` et $b=$`r b_coeff`.
+
+**??? supprimer les estimations $a$ et $b$ ci dessus ???**
 
 ```{r 3_graph, echo=FALSE, fig.asp = .63}
 # http://www.sthda.com/english/wiki/correlation-test-between-two-variables-in-r#visualize-your-data-using-scatter-plots
@@ -281,10 +300,62 @@ ggscatter(d3, x = "x2", y = "y",
 
 ### Calcul d'une estimation ponctuelle de $\theta$
 
+Il a pu être défini que : 
 
+**??? Pas certain : de Yxi et Yxn ???**
+
+\[\hat{\theta}_{1n} = \frac{\sum_{i=1}^{n}(x_i^2 - \overline{x_n^2})(Y_{x_i} - \overline{Y_{\underline{X}_n}})}{nS_{\underline{X}_n}^2}\]
+
+Ainsi à partir de l'échantillon, comme on a :
+
+\[nS_{\underline{X}_n}^2 = \sum_{i=1}^{n}(x^2 - \overline{x^2_n}) = 656,906\]
+et
+\[nS_{\underline{X}_n}^2 = \sum_{i=1}^{n}(x^2 - \overline{x^2_n})(Y_{x_i} - \overline{Y_{\underline{X}_n}}) = 501,653\]
+
+On peut en déduire $\hat{\theta}_{1n}$, tel que : 
+\[\hat{\theta}_{1n} = \theta = 0,7637\]
+
+Par ailleurs, on obtient un écart résiduel non nul, en effet, on a :
+
+\[\sum_{i=1}^{n} \tilde{e_i} = 2,7\]
 
 ### Calcul d'un intervalle de confiance ($IC$) de niveau 95%  pour $\theta$
 
-### Evaluation de la significativité de l'augmentation de $\theta$
+\[ \left[ \theta - Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} ;  \theta + Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} \right]  \space : (3)\]
 
-On souhaite savoir si l'on peut accepter au seuil de 5% l'hypothèse $H_0 : \theta > \theta_{passe} \Leftrightarrow H_0 : \theta > 0,9$.
+Or on support que l'écart-type ($a$) est tel que $a = 0,5$, ainsi :
+
+\[(3) \space \Leftrightarrow \left[ 0,7637 - 1,96 \times \sqrt{\frac{0,5^2}{656,906}} ; 0,7637 + 1,96 \times \sqrt{\frac{0,5^2}{656,906}}
+ \right]\]
+
+\[(3) \space \Leftrightarrow \left[ 0,7254 ; 0,8019 \right]\]
+
+
+### Evaluation d'une évolution significative de $\theta$
+
+On ne souhaite ici évaluer une croissance ou une décroissance, de $\theta$ ; mais seulement savoir s'il y a une différence.
+
+Ainsi, on souhaite savoir si l'on peut accepter au seuil de 5% l'hypothèse $H_1 : \theta = \theta_{passé} \Leftrightarrow H_0 : \theta = 0,9$ contre $H_1 : \theta \ne 0,9$.
+
+#### Test d'hypothèses
+
+\[W^\alpha_{Y_{\underline{X}_n}}(\theta) = \left\{ \mid \hat{\theta}_n - 0,9 \mid > Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} \right\} \space : (4)\]
+
+\[(4) \space \Leftrightarrow W^\alpha_{Y_{\underline{X}_n}}(\theta) = \left\{ \mid \hat{\theta}_n - 0,9 \mid > 1,96 \times \sqrt{\frac{0,5^2}{656,906}} \right\}\]
+
+\[(4) \space \Leftrightarrow W^\alpha_{Y_{\underline{X}_n}}(\theta) = \left\{ \mid \hat{\theta}_n - 0,9 \mid > 0,038 \right\}\]
+
+#### Observations
+
+On observe :
+
+\[\mid \hat{\theta}_n - 0,9 \mid = \mid 0,7637 - 0,9 \mid = \mid -0.1363 \mid = 0.1363 \space : (5)\]
+\[(5) \space \Leftrightarrow \mid \hat{\theta}_n - 0,9 \mid \in W^\alpha_{Y_{\underline{X}_n}}\]
+
+#### Décision
+
+On accepte $H_1$, au seuil de 5%.
+
+#### Conlcusion
+
+On en conclue que la valeur du paramètre $\theta$ a évolu significativement par rapport aux mesures précédentes.
