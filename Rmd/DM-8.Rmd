@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Préparation de l'environnement
 
-R et Rstudio seront utilisés pour la rédaction de ce DM, ainsi que les packagessuivants :
+R et Rstudio seront utilisés pour la rédaction de ce DM, ainsi que les packages suivants :
 
 ```{r packages_loading, results='hide'}
 library(readr)
@@ -209,18 +209,26 @@ Pour estimer le paramètre $\theta$, on fait $n(n \ge 1)$ essais indépendants a
 
 ### Modèle statistique associé à $Y_n$
 
-### Calcul
-
 On pose le modèle statistique suivant à deux paramètres : 
 \[( \mathbb{R}^n,  \otimes_{i=1}^{n} N(\theta x^2, a^2)_{(\theta, a) \in \mathbb{R}^{2} \times ]0;+\infty[})\]
 
 Avec pour vraissemblance : 
 \[L(Y_{\underline{X}_n}, \theta, a^2) = (2 \pi a^2)^{\frac{-n}{2}} \times e^{\frac{\sum_{i = 1}^{n} (Y_i - \theta_{i}^{2})^2}{2a^2}}\]
-
-Et avec pour comme régularité : 
+et 
 \[ log L(Y_{\underline{X}_n}, \theta, a^2) ) = log(2\pi)^{\frac{-n}{2}} - \frac{n}{2} \ln x - \frac{\sum_{i=1}^{n} (Y_i - \theta_{i}^{2})^2}{2a^2}  = g(\theta, a^2)\]
 
+### Régularité du modèle $Y_n$
+
+On pose $Z$ une variable variable aléatoire normale centrée réduite, tel qu'en utilisant les notations précédentes : $Z = \frac{Y - \theta x^2}{a}$.
+
+Or on sait selon le théorème 1 du chapitre sur la régression linéaire que le modèle : $( \mathbb{R}^n,  \otimes_{i=1}^{n} N(\theta_0 + \theta_1 x^2, a^2)_{(\theta_0,\theta_1, a) \in \mathbb{R}^{3} \times ]0;+\infty[}) \space : (3)$ Et sachant $\theta_0 = 0$ et $x'=x^2$ on a : $(3) \Rightarrow ( \mathbb{R}^n,  \otimes_{i=1}^{n} N(\theta x^2, a^2)_{(\theta, a) \in \mathbb{R}^{2} \times ]0;+\infty[})$
+
+Ainsi le modèle de $Y_n$, cité plus haut, est régulier.
+
 ### Calcul de la borne de Cramer-Rao pour $\theta$
+
+Pour $\theta$ on a la borne de Cramer-Rao suivante :
+\[I_{\underline{X}_n}(\theta)^{-1}= \frac{a^2}{nS^2_{\underline{X}_n}}\]
 
 ### Calcul de $\hat{\theta}_n$
 
@@ -279,4 +287,4 @@ ggscatter(d3, x = "x2", y = "y",
 
 ### Evaluation de la significativité de l'augmentation de $\theta$
 
-On souhaite savoir si l'on peut accepter au seuil de 5% l'hypothèse $H_0 : \theta > \theta_{passé} \Leftrightarrow H_0 : \theta > 0,9 $.
+On souhaite savoir si l'on peut accepter au seuil de 5% l'hypothèse $H_0 : \theta > \theta_{passe} \Leftrightarrow H_0 : \theta > 0,9$.
