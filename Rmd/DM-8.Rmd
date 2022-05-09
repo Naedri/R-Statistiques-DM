@@ -65,11 +65,15 @@ A partir de $\overline{X} =$ `r dim(d1)[1]`, on a $n \overline{X}_{n} =$ `r dim(
 
 ## Intervalle de confiance ($IC$) asymptotique pour $\lambda$
 
-Comme **???**, on peut approximer la loi de Poisson par une loi Normale centrée réduite $N(0,1)$ par : 
+Comme la variable aléatoire X suit une loi de Poisson de paramètre $\lambda$ et que notre effectif d'échantillon n est grand, on utilise la fonction pivotale asymptotique : 
 
-\[\frac{\sqrt{n}(Xn - \lambda)}{\sqrt{Xn}} \leadsto N(0,1)\]
+\[\frac{\sqrt{n}(\overline{X}_n - \lambda)}{\sqrt{\overline{X}_n}} \leadsto N(0,1)\]
 
-Avec cette approximation, on peut en déduire un intervalle de confiance ($IC$) asymptotique (car $n =$ `r dim(d1)[1]` $< 100$).
+Ainsi, on peut en déduire un intervalle de confiance ($IC$) asymptotique.
+
+\[IC^{1-\alpha \text{ asymp }}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} \space ; \space  
+\overline{X}_{n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}}
+\space \right] \space\]
 
 ### 1. Calcul d'un interval de confiance asymptotique unilatéral gauche de niveau 95% pour $\lambda$ ($IC_g$)
 
@@ -80,7 +84,7 @@ On obtient un $IC$ tel que :
 \[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 - 1,96 \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
 \[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,298 <  \lambda \right] \]
 
-### 1. Calcul d'un interval de confiance asymptotique unilatéral droit de niveau 95% pour $\lambda$ ($IC_d$)
+### 2. Calcul d'un interval de confiance asymptotique unilatéral droit de niveau 95% pour $\lambda$ ($IC_d$)
 
 On obtient un  tel que : 
 
@@ -89,11 +93,13 @@ On obtient un  tel que :
 \[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 + 1,96 \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
 \[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,787 >  \lambda \right] \]
 
+<!-- TODO : Commenter ces observations -->
+
 ## Peut-on accepter l’hypothèse que $\lambda = 1$ ? 
 
 ### Test d'hypothèses
 
-On pose $H_0 : \lambda = 1$ et $ H_1 : \lambda \ne 1$.
+On pose $H_0 : \lambda = 1$ et $H_1 : \lambda \ne 1$.
 
 ### Observations
 
@@ -101,7 +107,7 @@ On a $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$, autrement dit $\lambda \n
 
 ### Décision 
 
-On ne peut donc accepter $H_0$.
+On rejette $H_0$.
 
 ### Conclusion 
 
