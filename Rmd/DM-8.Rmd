@@ -156,7 +156,7 @@ On va comparer ce paramètre avec une estimation ponctuelle, afin de savoir si l
 
 ## Observation ponctuelle
 
-Dans notre observation ponctuelle (lot), on a observé que la proportion de pièces défectueuses est de `r 12/40` (`= 12/40`).
+Dans notre observation ponctuelle (lot), on a observé que la proportion de pièces défectueuses est de `r 12/140` (`= 12/140`).
 
 ## Point de vue du fabricant ($TH_1$)
 
@@ -174,7 +174,7 @@ Dans notre observation ponctuelle (lot), on a observé que la proportion de piè
 
 ### Décision
 
-Pour le $TH_1$, on accepte donc $H_0$.
+Pour le $TH_1$, on ne rejette pas l'hypothèse $H_0$ jusqu'à preuve du contraire.
 
 ### Conlcusion
 
