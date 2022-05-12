@@ -61,14 +61,27 @@ summary(d1$sinistre)
 ggplot(d1, aes(x=sinistre)) + geom_bar()
 ```
 
-A partir de $\overline{X} =$ `r dim(d1)[1]`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
+**TODO : ne pas afficher output de la commande summary mais seulement ce qui nous interresse (ici moyenne)**
+
+**??? verifier xbar et n * xbar**
+
+A partir de $\overline{X} =$ `r mean(d1$sinistre)`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
 
 ## Intervalle de confiance ($IC$) asymptotique pour $\lambda$
 
+**??? que décidez vous ? prendre choix 1 ou choix 2 ? Adrien préfère choix 2**
+
+### choix1
 Comme la variable aléatoire X suit une loi de Poisson de paramètre $\lambda$ et que notre effectif d'échantillon n est grand, on utilise la fonction pivotale asymptotique : 
 
 \[\frac{\sqrt{n}(\overline{X}_n - \lambda)}{\sqrt{\overline{X}_n}} \leadsto N(0,1)\]
+### choix2
+Selon une estimation ds intervalles de confiances sur le modèle d'échantillonngage de lois de Poissons : étude et estimations de $\lambda$ (p45)
+Comme le modèle est discret età distance finie, on peut calculer des intervalles de confiances par excès en utilisant la relation 
 
+\[F_{n \underline{X}_n (k) = P (\{Y_n > 2n \lambda\}))} \leadsto \chi^2_{2(k+1)]} \]
+
+### après
 Ainsi, on peut en déduire un intervalle de confiance ($IC$) asymptotique.
 
 \[IC^{1-\alpha \text{ asymp }}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} \space ; \space  
@@ -161,7 +174,7 @@ Dans notre observation ponctuelle (lot), on a observé que la proportion de piè
 
 ### Décision
 
-On accepte donc $H_0$ de $TH_1$.
+Pour le $TH_1$, on accepte donc $H_0$.
 
 ### Conlcusion
 
@@ -183,21 +196,26 @@ Jusqu'à preuve du contraire, le client acceptera le lot.
 
 ### Décision
 
-On accepte donc $H_0$ $TH_2$.
+Pour le $TH_2$, on accepte donc $H_0$.
 
 ### Conlcusion
 
-Jusqu'à preuve du contraire, le client n'acceptera pas le lot.
+Jusqu'à preuve du contraire, le client n'acceptera pas le lot. **??Problème de formulation ou de conclusion -> à vérifier??**
 
 ## Commentaires
 
 L'acceptation du lot a été évaluée depuis les points de vues des deux parties.
 
 **On se place du point de vue du client, il ne faudrait donc pas tester $TH_2$ mais seulement $TH_1$. En effet, en se placant du côté du client, on souhaite seulement évaluer ce que craint le client de rejeter à tord.**
+**On a réalisé deux tests, si ilssont contradictaatoires => prendre le test du point de vue client.**
+
+**??? TODO : vérifier la formulation des deux tests, avec le livret de cours module 2 (page 62).????**
 
 \newpage
 
 # Exercice 3
+
+**LA PROF VEUT QUASI LA MEME CHOSE QUE L'EXO FAIT EN COURS (feuille donnée au dernier cours sur la regression)**
 
 ```{r 3_cleaning, echo=FALSE, results='hide'}
 rm(list = ls(all = TRUE))
@@ -222,6 +240,8 @@ Avec pour vraissemblance :
 \[L(Y_{\underline{X}_n}, \theta, a^2) = (2 \pi a^2)^{\frac{-n}{2}} \times e^{\frac{\sum_{i = 1}^{n} (Y_i - \theta_{i}^{2})^2}{2a^2}}\]
 et 
 \[ log L(Y_{\underline{X}_n}, \theta, a^2) ) = log(2\pi)^{\frac{-n}{2}} - \frac{n}{2} \ln x - \frac{\sum_{i=1}^{n} (Y_i - \theta_{i}^{2})^2}{2a^2}  = g(\theta, a^2)\]
+
+**??attention est ce que les formules plus haut sont correctes, la prof ne semblait pas les valider : => regarder la photo de la prof??**
 
 ### Régularité du modèle $Y_n$
 
@@ -257,6 +277,8 @@ On a $\hat{\theta}_n$ tel que :
 
 Soit l'intervalle de confiance ($IC$) de $\hat{\theta}_n$ tel que : 
 
+**??IC de $\hat{\theta_n}$ et non $\theta$ ???**
+
 \[IC^{1-\alpha}_{Y_{\underline{X}_{n}}}(\theta) =  \left[ \theta - Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} ; \theta + Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}}  \right]\]
 
 **TODO : Mettre à jour les intervalles avec ';' et non ','**
@@ -280,6 +302,8 @@ La table suivante résume la dispersion de nos données :
 ```{r 3_data_description, echo=FALSE}
 summary(d3)
 ```
+**TODO : ne pas afficher output de la commande summary mais seulement ce qui nous interresse (ici moyenne)**
+**TODO : la prof ne veut pas le summary, mais les données brutes avec une autre colonne : x2**
 
 ```{r 3_correlation, echo=FALSE, results='hide'}
 d3 <- dplyr::mutate(d3, x2 = d3$x * d3$x)
@@ -290,9 +314,10 @@ b_coeff <- round(Dr$coefficients[1], digits = 2)
 model<-paste0("Y = ", a_coeff,"x² + ", b_coeff)
 ```
 
+
 Le graphique, ci-dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x^2$, tel que $Y = ax² + b$ avec $a=$`r a_coeff` et $b=$`r b_coeff`.
 
-**??? supprimer les estimations $a$ et $b$ ci dessus ???**
+**??? supprimer les estimations $a$ et $b$ ci dessus ??? non on peut laisser selon la prof, mais ajouter qu'ils ont été calculé avec Pearson**
 
 ```{r 3_graph, echo=FALSE, fig.asp = .63}
 # http://www.sthda.com/english/wiki/correlation-test-between-two-variables-in-r#visualize-your-data-using-scatter-plots
@@ -308,7 +333,7 @@ ggscatter(d3, x = "x2", y = "y",
 
 Il a pu être défini que : 
 
-**??? Pas certain : de Yxi et Yxn ???**
+**??? Pas certain : de Yxi et Yxn???**
 
 \[\hat{\theta}_{1n} = \frac{\sum_{i=1}^{n}(x_i^2 - \overline{x_n^2})(Y_{x_i} - \overline{Y_{\underline{X}_n}})}{nS_{\underline{X}_n}^2}\]
 
