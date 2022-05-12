@@ -41,7 +41,7 @@ data.frame(unlist("all"))
 
 ## Contexte
 
-Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré. $X$ est une variables aléatoire discrète. Il est admis que l'occurence des sinistres $X$ suit une loi de Poisson pour laquelle on recherche le paramètre inconnu $\lambda$.
+Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré. $X$ est une variables aléatoire discrète et il est admis que l'occurence des sinistres $X$ suit une loi de Poisson pour laquelle on recherche le paramètre inconnu $\lambda$.
 Le modèle d'échantillonage de nos données est le suivant : $(\mathbb{N}, (\mathscr{P}_{\lambda})_{\lambda>0})^{n}$.
 
 ### Description des données
@@ -65,14 +65,15 @@ ggplot(d1, aes(x=sinistre)) + geom_bar()
 
 **??? verifier xbar et n * xbar**
 
-A partir de $\overline{X} =$ `r mean(d1$sinistre)`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
+A partir de $\overline{X}_{n} = \frac{\sum_{i=0}^n x_i}{n}$ $=$ `r mean(d1$sinistre)`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
 
 ## Intervalle de confiance ($IC$) asymptotique pour $\lambda$
 
 **??? que décidez vous ? prendre choix 1 ou choix 2 ? Adrien préfère choix 2**
 
 ### choix1
-Comme la variable aléatoire X suit une loi de Poisson de paramètre $\lambda$ et que notre effectif d'échantillon n est grand, on utilise la fonction pivotale asymptotique : 
+<!--page 72 du cours, la prof nous a parlé de ça quand on lui a posé la question-->
+La variable aléatoire $X$ suit une loi de Poisson de paramètre $\lambda$ et notre échantillon est de grande taille, on donne donc les régions critiques par excès en utilisant les fractiles de lois normales et la fonction pivotale asymptotique suivante.
 
 \[\frac{\sqrt{n}(\overline{X}_n - \lambda)}{\sqrt{\overline{X}_n}} \leadsto N(0,1)\]
 ### choix2
