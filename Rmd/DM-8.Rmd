@@ -28,6 +28,7 @@ R et Rstudio seront utilisés pour la rédaction de ce DM, ainsi que les package
 library(readr)
 library(dplyr)
 library(ggplot2)
+library(knitr)
 ```
 
 \newpage
@@ -295,6 +296,9 @@ d3 <- read_delim("../data/donnees.exo3.csv",
     delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ","), 
     trim_ws = TRUE, show_col_types = FALSE)
 d3 <- select(d3, x, y)
+
+#https://bookdown.org/yihui/rmarkdown-cookbook/kable.html
+kable(x=d3, col.names=c("eee","$\theta$"))
 ```
 
 L'effectif des données est de `r dim(d3)[1]`.
