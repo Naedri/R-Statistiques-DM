@@ -41,20 +41,19 @@ data.frame(unlist("all"))
 
 ## Contexte
 
-Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré. $X$ est une variables aléatoire discrète et il est admis que l'occurence des sinistres $X$ suit une loi de Poisson (notée $\mathscr{P_{\lambda}}$) pour laquelle on recherche le paramètre inconnu $\lambda >0$.
+Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré. $X$ est une variables aléatoire discrète et il est admis que l'occurence des sinistres $X$ suit une loi de Poisson pour laquelle on recherche le paramètre inconnu $\lambda >0$ (notée $\mathscr{P_{\lambda}}$). 
+<!--Et pour $\lambda > 20$, on a $E_\lambda(X) = \lambda = V_\lambda (X)$.-->
 
-Le modèle d'échantillonage de nos données est le suivant : $(\mathbb{N}, (\mathscr{P}_{\lambda})_{\lambda>0})^{n}$.
-Et on a $E_\lambda(X) = \lambda = V_\lambda (X)$
+Pour cela, on a disposition un échantillon aléatoire bernouillien $\underline{X}_{n} = (X_1 \ldots X_n) \text{, } n \ge 1$. Le modèle d'échantillonage associé est le suivant : $(\mathbb{N}, (\mathscr{P}_{\lambda})_{\lambda>0})^{n}$. 
+
+La statistique de test associée à cet échantillon est $n \overline{X}_n$, qui représente le nombre total d'observations. Et on a $n \overline{X}_n \leadsto n \lambda$.
 
 ### Description des données
 
 ```{r 1_data_import, echo=FALSE, results='hide'}
-# On importe les données avec la commande suivante
 d1 <- read_delim("../data/donnees.exo1.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE, show_col_types = FALSE)
 ```
-
-L'effectif de l'échantillon est de `r dim(d1)[1]`. Celui-ci peut donc être considéré de grande taille.
 
 L'histogramme suivant résument la dispersion de nos données :
 
@@ -63,23 +62,22 @@ p <- ggplot(d1, aes(x=sinistre), fill=factor(id)) + geom_bar(fill="lightblue") +
 p + ggtitle("Histogramme des sinistres") + xlab("Nombre de sinistre(s) par individus.") + ylab("Fréquence")
 ```
 
-A partir de $\overline{X}_{n} = \frac{\sum_{i=0}^n x_i}{n} =$ `r mean(d1$sinistre)`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
+L'effectif de l'échantillon est de `r dim(d1)[1]`. Celui-ci peut donc être considéré de grande taille.
+A partir de $\overline{X}_{n} = \frac{\sum_{i=0}^n x_i}{n} =$ `r round(x=mean(d1$sinistre), digits=2)`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
 
-## Intervalle de confiance ($IC$) asymptotique pour $\lambda$
-
-**??? que décidez vous ? prendre choix 1 ou choix 2 ? Adrien préfère choix 2**
+## Intervalle de confiance ($IC$) unilatéral pour $\lambda$
 
 ### choix1
 
-<!--page 72 du cours, la prof nous a parlé de ça quand on lui a posé la question-->
-La variable aléatoire $X$ suit une loi de Poisson de paramètre $\lambda$ et notre échantillon est de grande taille. Avec la page 72 du cours, on donne donc les régions critiques par excès en utilisant les fractiles de lois normales et la fonction pivotale asymptotique suivante.
+La variable aléatoire $X$ suit une loi de Poisson de paramètre $\lambda$ et notre échantillon est de grande taille. Avec le livret du module 2 du cours (page 72), on donne donc les régions critiques par excès en utilisant les fractiles de lois normales et la fonction pivotale asymptotique suivante.
 
-\[\frac{\sqrt{n}(\overline{X}_n - \lambda)}{\sqrt{\overline{X}_n}} \leadsto N(0,1)\]
+\[\frac{\sqrt{n}(\overline{X}_n - \lambda)}{\sqrt{\overline{X}_n}} \xrightarrow{\mathit{CL}} N(0,1)\]
 
 ### choix2
 
-Selon une estimation des intervalles de confiances sur le modèle d'échantillonngage de lois de Poisson de paramètre $\lambda$ (page 45 du cours).
-Comme le modèle est discret, à distance finie, on peut calculer des intervalles de confiances par excès en utilisant la relation : 
+Pour estimer $\lambda$, on peut utiliser, à distance finie, la fonction pivotale $n \overline{X}_n$ suivant une loi de Poisson de paramètre $n \lambda$.
+
+Avec le livret du module 2 du cours (page 45), on trouve que selon une estimation des intervalles de confiances sur le modèle d'échantillonngage de lois de Poisson de paramètre $\lambda$ se basant sur la relation avec les lois du $\chi^2$, on peut calculer des intervalles de confiances par excès en utilisant la relation : 
 
 \[ F_{n\overline{X}_n} (k) = P (\{Y_n > 2n \lambda\}) \text{, avec } Y_n \leadsto \chi^2_{2(k+1)]} \]
 
@@ -123,7 +121,7 @@ On a $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$, autrement dit $\lambda \n
 
 ### Décision 
 
-On rejette $H_0$.
+On rejette $H_0$, jusqu'à preuve du contraire.
 
 ### Conclusion 
 
@@ -232,7 +230,7 @@ Une expérience chimique consiste à ajouter une dose $x$ d'un agent $A$ dans un
 
 ## Estimation du paramètre $\theta$
 
-Pour estimer le paramètre $\theta$, on fait $n(n \ge 1)$ essais indépendants avec des doses de l’agent $A$ notées $X_1, \ldots X_n$. De $Y$, on extrait donc un échantillon aléatoire bernoullien $Y_n = (Y_1 \ldots Y_n)$.
+Pour estimer le paramètre $\theta$, on fait $n(n \ge 1)$ essais indépendants avec des doses de l’agent $A$ notées $X_1, \ldots X_n$. De $Y$, on extrait donc un échantillon aléatoire bernoullien $\underline{Y}_{n} = (Y_1 \ldots Y_n)$.
 
 ### Modèle statistique associé à $Y_n$
 
