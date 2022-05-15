@@ -41,8 +41,10 @@ data.frame(unlist("all"))
 
 ## Contexte
 
-Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré. $X$ est une variables aléatoire discrète et il est admis que l'occurence des sinistres $X$ suit une loi de Poisson pour laquelle on recherche le paramètre inconnu $\lambda$.
+Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré. $X$ est une variables aléatoire discrète et il est admis que l'occurence des sinistres $X$ suit une loi de Poisson (notée $\mathscr{P_{\lambda}}$) pour laquelle on recherche le paramètre inconnu $\lambda >0$.
+
 Le modèle d'échantillonage de nos données est le suivant : $(\mathbb{N}, (\mathscr{P}_{\lambda})_{\lambda>0})^{n}$.
+Et on a $E_\lambda(X) = \lambda = V_\lambda (X)$
 
 ### Description des données
 
@@ -54,38 +56,38 @@ d1 <- read_delim("../data/donnees.exo1.csv",
 
 L'effectif de l'échantillon est de `r dim(d1)[1]`. Celui-ci peut donc être considéré de grande taille.
 
-Les indicateurs et le graphe suivant résument la dispersion de nos données :
+L'histogramme suivant résument la dispersion de nos données :
 
 ```{r 1_data_description, echo=FALSE, fig.asp = .63}
-summary(d1$sinistre)
-ggplot(d1, aes(x=sinistre)) + geom_bar()
+p <- ggplot(d1, aes(x=sinistre), fill=factor(id)) + geom_bar(fill="lightblue") + theme_classic()
+p + ggtitle("Histogramme des sinistres") + xlab("Nombre de sinistre(s) par individus.") + ylab("Fréquence")
 ```
 
-**TODO : ne pas afficher output de la commande summary mais seulement ce qui nous interresse (ici moyenne)**
-
-**??? verifier xbar et n * xbar**
-
-A partir de $\overline{X}_{n} = \frac{\sum_{i=0}^n x_i}{n}$ $=$ `r mean(d1$sinistre)`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
+A partir de $\overline{X}_{n} = \frac{\sum_{i=0}^n x_i}{n} =$ `r mean(d1$sinistre)`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
 
 ## Intervalle de confiance ($IC$) asymptotique pour $\lambda$
 
 **??? que décidez vous ? prendre choix 1 ou choix 2 ? Adrien préfère choix 2**
 
 ### choix1
+
 <!--page 72 du cours, la prof nous a parlé de ça quand on lui a posé la question-->
-La variable aléatoire $X$ suit une loi de Poisson de paramètre $\lambda$ et notre échantillon est de grande taille, on donne donc les régions critiques par excès en utilisant les fractiles de lois normales et la fonction pivotale asymptotique suivante.
+La variable aléatoire $X$ suit une loi de Poisson de paramètre $\lambda$ et notre échantillon est de grande taille. Avec la page 72 du cours, on donne donc les régions critiques par excès en utilisant les fractiles de lois normales et la fonction pivotale asymptotique suivante.
 
 \[\frac{\sqrt{n}(\overline{X}_n - \lambda)}{\sqrt{\overline{X}_n}} \leadsto N(0,1)\]
-### choix2
-Selon une estimation ds intervalles de confiances sur le modèle d'échantillonngage de lois de Poissons : étude et estimations de $\lambda$ (p45)
-Comme le modèle est discret età distance finie, on peut calculer des intervalles de confiances par excès en utilisant la relation 
 
-\[F_{n \underline{X}_n (k) = P (\{Y_n > 2n \lambda\}))} \leadsto \chi^2_{2(k+1)]} \]
+### choix2
+
+Selon une estimation des intervalles de confiances sur le modèle d'échantillonngage de lois de Poisson de paramètre $\lambda$ (page 45 du cours).
+Comme le modèle est discret, à distance finie, on peut calculer des intervalles de confiances par excès en utilisant la relation : 
+
+\[ F_{n\overline{X}_n} (k) = P (\{Y_n > 2n \lambda\}) \text{, avec } Y_n \leadsto \chi^2_{2(k+1)]} \]
 
 ### après
+
 Ainsi, on peut en déduire un intervalle de confiance ($IC$) asymptotique.
 
-\[IC^{1-\alpha \text{ asymp }}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} \space ; \space  
+\[IC^{1-\alpha \text{, asymp}}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} \space ; \space  
 \overline{X}_{n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}}
 \space \right] \space\]
 
@@ -93,19 +95,19 @@ Ainsi, on peut en déduire un intervalle de confiance ($IC$) asymptotique.
 
 On obtient un $IC$ tel que : 
 
-\[IC^{1-\alpha \text{ asymp }}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} <  \lambda \right] \space : (1)\]
-\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 - Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
-\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 - 1,96 \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
-\[(1) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,298 <  \lambda \right] \]
+\[IC^{1-\alpha \text{, asymp}}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} <  \lambda \right] \space : (1)\]
+\[(1) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,543 - Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
+\[(1) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,543 - 1,96 \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
+\[(1) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,298 <  \lambda \right] \]
 
 ### 2. Calcul d'un interval de confiance asymptotique unilatéral droit de niveau 95% pour $\lambda$ ($IC_d$)
 
 On obtient un  tel que : 
 
-\[IC^{1+\alpha \text{ asymp }}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} >  \lambda \right] \space : (2)\]
-\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 + Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
-\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,543 + 1,96 \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
-\[(2) \space \Leftrightarrow IC^{0,95 \text{ asymp }}_{\underline{X}_{n}}(\lambda) = \left[0,787 >  \lambda \right] \]
+\[IC^{1+\alpha \text{, asymp}}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} >  \lambda \right] \space : (2)\]
+\[(2) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,543 + Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
+\[(2) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,543 + 1,96 \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
+\[(2) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,787 >  \lambda \right] \]
 
 <!-- TODO : Commenter ces observations -->
 
@@ -117,7 +119,7 @@ On pose $H_0 : \lambda = 1$ et $H_1 : \lambda \ne 1$.
 
 ### Observations
 
-On a $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$, autrement dit $\lambda \notin \left[0.298;0.787 \right]$ .
+On a $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$, autrement dit $\lambda \notin \left[ 0.298;0.787 \right]$ .
 
 ### Décision 
 
@@ -165,13 +167,13 @@ Dans notre observation ponctuelle (lot), on a observé que la proportion de piè
 
 \[H_0 : p_0 \le 0,1 \text{ contre } H_1 : p_0 > 0,1\]
 
-\[W^{\alpha \text{ asymp }}_{X_n}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > p + \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
-\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1 + \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
-\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1496 \right\} \]
+\[W^{\alpha \text{, asymp}}_{X_n}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > p + \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
+\[(3) \space \Leftrightarrow W^{0,05 \text{, asymp}}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1 + \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
+\[(3) \space \Leftrightarrow W^{0,05 \text{, asymp}}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1496 \right\} \]
 
 ### Observations
 
-\[\frac{\underline{X}_{n}}{\overline{X}_{n}} = 0,0857 \notin W^{\alpha \text{ asymp }}_{X_n}(p)\]
+\[\frac{\underline{X}_{n}}{\overline{X}_{n}} = 0,0857 \notin W^{\alpha \text{, asymp}}_{X_n}(p)\]
 
 ### Décision
 
@@ -187,13 +189,13 @@ Jusqu'à preuve du contraire, le client acceptera le lot.
 
 \[H_0 : p_0 \ge 0,1 \text{ contre } H_1 : p_0 < 0,1\]
 
-\[W^{\alpha \text{ asymp }}_{X_n}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > p - \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
-\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1 - \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
-\[(3) \space \Leftrightarrow W^{0,05 \text{ asymp }}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,0503 \right\} \]
+\[W^{\alpha \text{, asymp}}_{X_n}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > p - \frac{Z_{1-\alpha}}{\sqrt{n}} \times \sqrt{p(1-p)} \right\} \space : (3)\]
+\[(3) \space \Leftrightarrow W^{0,05 \text{, asymp}}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1 - \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
+\[(3) \space \Leftrightarrow W^{0,05 \text{, asymp}}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,0503 \right\} \]
 
 ### Observations
 
-\[\frac{\underline{X}_{n}}{\overline{X}_{n}} = 0,0857 \notin W^{\alpha \text{ asymp }}_{X_n}(p)\]
+\[\frac{\underline{X}_{n}}{\overline{X}_{n}} = 0,0857 \notin W^{\alpha \text{, asymp}}_{X_n}(p)\]
 
 ### Décision
 
@@ -281,8 +283,6 @@ Soit l'intervalle de confiance ($IC$) de $\hat{\theta}_n$ tel que :
 **??IC de $\hat{\theta_n}$ et non $\theta$ ???**
 
 \[IC^{1-\alpha}_{Y_{\underline{X}_{n}}}(\theta) =  \left[ \theta - Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} ; \theta + Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}}  \right]\]
-
-**TODO : Mettre à jour les intervalles avec ';' et non ','**
 
 ## Estimation ponctuelle du paramètre $\theta$
 
