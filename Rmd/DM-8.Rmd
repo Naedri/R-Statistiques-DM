@@ -46,52 +46,51 @@ Soit $X$, la variable aléatoire représentant le nombre d'accidents par assuré
 
 Pour cela, on a disposition un échantillon aléatoire bernouillien $\underline{X}_{n} = (X_1 \ldots X_n) \text{, } n \ge 1$. Le modèle d'échantillonage associé est le suivant : $(\mathbb{N}, (\mathscr{P}_{\lambda})_{\lambda>0})^{n}$. 
 
-La statistique de test associée à cet échantillon est $n \overline{X}_n$, qui représente le nombre total d'observations. Et on a $n \overline{X}_n \leadsto n \lambda$.
+La statistique de test associée à cet échantillon est $n \overline{X}_n$, qui représente le nombre total d'observations.
 
 ### Description des données
 
 ```{r 1_data_import, echo=FALSE, results='hide'}
 d1 <- read_delim("../data/donnees.exo1.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE, show_col_types = FALSE)
+overlineXn <- mean(d1$sinistre)
+n <- length(d1$sinistre)
 ```
 
 L'histogramme suivant résument la dispersion de nos données :
 
 ```{r 1_data_description, echo=FALSE, fig.asp = .63}
 p <- ggplot(d1, aes(x=sinistre), fill=factor(id)) + geom_bar(fill="lightblue") + theme_classic()
-p + ggtitle("Histogramme des sinistres") + xlab("Nombre de sinistre(s) par individus.") + ylab("Fréquence")
+p + ggtitle("Histogramme des sinistres") + xlab("Nombre de sinistre(s) par individus.") + ylab("Effectif dans l'échantillon")
 ```
 
-L'effectif de l'échantillon est de `r dim(d1)[1]`. Celui-ci peut donc être considéré de grande taille.
-A partir de $\overline{X}_{n} = \frac{\sum_{i=0}^n x_i}{n} =$ `r round(x=mean(d1$sinistre), digits=2)`, on a $n \overline{X}_{n} =$ `r dim(d1)[1]*mean(d1$sinistre)`.
+L'effectif de l'échantillon est de `r dim(d1)[1]`.
+A partir de $\overline{X}_{n} = \frac{\sum_{i=0}^n x_i}{n} =$ `r round(x=overlineXn, digits=2)`, on a $n \overline{X}_{n} =$ `r n*overlineXn`.
 
 ## Intervalle de confiance ($IC$) unilatéral pour $\lambda$
 
-### choix1
+Pour rechercher une estimation de $\lambda$, on peut utiliser, à distance finie, la fonction pivotale $n \overline{X}_n$ qui suit une loi de Poisson de paramètre $n \lambda$ : $n \overline{X}_n \leadsto \mathscr{P}_{n\lambda}$.
 
-La variable aléatoire $X$ suit une loi de Poisson de paramètre $\lambda$ et notre échantillon est de grande taille. Avec le livret du module 2 du cours (page 72), on donne donc les régions critiques par excès en utilisant les fractiles de lois normales et la fonction pivotale asymptotique suivante.
+Notre modèle étant discret, avec le livret du module 2 du cours (page 45), on peut déduire l'intervalle de confiance par excès du paramètre $\lambda$ :
 
+\[IC^{1-\alpha+}_{\underline{X}_{n}}(\lambda) = \left[ \frac{\chi^2_{2n \overline{X}_n} (\alpha_2)}{2n} ; \frac{\chi^2_{2 (n \overline{X}_n + 1)} (1 - \alpha_1)}{2n} \right]  \text{ avec } \alpha = \alpha_1 + \alpha_2 \space : (IC_1)\] 
+
+Or la table statistique des fractiles de la loi du $\chi^2$ fournie, ne nous permet pas de connaître les fractiles d'un $\chi^2$ de degré de liberté supérieur à 30. En effet, on a $2n \overline{X}_n =$ `r 2*n*overlineXn` et $2 (n \overline{X}_n + 1) =$ `r 2*(n*overlineXn + 1)`.
+Nous ne pouvons donc  utiliser l'$IC_1$. 
+
+Ainsi on considèrera l'effectif de notre échantillon grand. Dès lors, on donne la fonction pivotale asymptotique suivante :
 \[\frac{\sqrt{n}(\overline{X}_n - \lambda)}{\sqrt{\overline{X}_n}} \xrightarrow{\mathit{CL}} N(0,1)\]
 
-### choix2
-
-Pour estimer $\lambda$, on peut utiliser, à distance finie, la fonction pivotale $n \overline{X}_n$ suivant une loi de Poisson de paramètre $n \lambda$.
-
-Avec le livret du module 2 du cours (page 45), on trouve que selon une estimation des intervalles de confiances sur le modèle d'échantillonngage de lois de Poisson de paramètre $\lambda$ se basant sur la relation avec les lois du $\chi^2$, on peut calculer des intervalles de confiances par excès en utilisant la relation : 
-
-\[ F_{n\overline{X}_n} (k) = P (\{Y_n > 2n \lambda\}) \text{, avec } Y_n \leadsto \chi^2_{2(k+1)]} \]
-
-### après
-
-Ainsi, on peut en déduire un intervalle de confiance ($IC$) asymptotique.
-
+On en déduit donc un intervalle de confiance par excès ($IC_2$) asymptotique, en utilisant les fractiles de loi normale :
 \[IC^{1-\alpha \text{, asymp}}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} \space ; \space  
 \overline{X}_{n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}}
-\space \right] \space\]
+\space \right] \space : (IC_2)\]
+
+Dans la suite de cet exercice, nous utiliserons l'$IC_2$ pour l'estimation du paramètre $\lambda$.
 
 ### 1. Calcul d'un interval de confiance asymptotique unilatéral gauche de niveau 95% pour $\lambda$ ($IC_g$)
 
-On obtient un $IC$ tel que : 
+On obtient un $IC_g$ tel que : 
 
 \[IC^{1-\alpha \text{, asymp}}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} - Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} <  \lambda \right] \space : (1)\]
 \[(1) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,543 - Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
@@ -100,24 +99,28 @@ On obtient un $IC$ tel que :
 
 ### 2. Calcul d'un interval de confiance asymptotique unilatéral droit de niveau 95% pour $\lambda$ ($IC_d$)
 
-On obtient un  tel que : 
+On obtient un $IC_d$ tel que : 
 
 \[IC^{1+\alpha \text{, asymp}}_{\underline{X}_{n}}(\lambda) =  \left[\overline{X}_{n} + Z_{1 - \frac{\alpha}{2}} \times \sqrt{\frac{\overline{X}_{n}}{n}} >  \lambda \right] \space : (2)\]
 \[(2) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,543 + Z_{1 - \frac{0,05}{2}} \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
 \[(2) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,543 + 1,96 \times \sqrt{\frac{0,543}{35}} >  \lambda \right] \]
 \[(2) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,787 >  \lambda \right] \]
 
-<!-- TODO : Commenter ces observations -->
+### Commentaires
+
+L'utilisation d'intervalles de confiance unilatéraux est inadapté pour les lois symétriques comme la loi normale, si nous en avions eu la possibilité, il aurait fallu utiliser l'$IC_1$.
 
 ## Peut-on accepter l’hypothèse que $\lambda = 1$ ? 
 
+Nous répondrons à cette question, en évaluant un test d'hypothèse.
+
 ### Test d'hypothèses
 
-On pose $H_0 : \lambda = 1$ et $H_1 : \lambda \ne 1$.
+On pose $H_0 : \lambda = 1$ contre $H_1 : \lambda \ne 1$.
 
 ### Observations
 
-On a $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$, autrement dit $\lambda \notin \left[ 0.298;0.787 \right]$ .
+On observe que selon $H_0$, on a $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$. Autrement dit $\lambda \notin \left[ 0.298;0.787 \right]$
 
 ### Décision 
 
@@ -125,7 +128,7 @@ On rejette $H_0$, jusqu'à preuve du contraire.
 
 ### Conclusion 
 
-Par conséquent, on a $\lambda \ne 1$.
+Par conséquent, on ne peut accepter l'hypothèse $\lambda = 1$, et donc on a $\lambda \ne 1$.
 
 ### Commentaires
 
