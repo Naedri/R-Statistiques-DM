@@ -225,7 +225,7 @@ data.frame(unlist("all"))
 
 Une expérience chimique consiste à ajouter une dose $x$ d'un agent $A$ dans une solution $S$. Après réaction, on mesure la quantité d'une espèce $E$. 
 
-Pour $x$ donné, on suppose qu'il est pertinent de représenter cette mesure par une variable aléatoire $Y = \theta x^2 + aZ$, $a$ ($a>0$) connu, $\theta$ ($\theta \in \mathbb{R}$) inconnu,  $Z$ une variable aléatoire ($Z \leadsto N(0,1)$).
+Pour $x$ donné, on suppose qu'il est pertinent de représenter cette mesure par une variable aléatoire $Y = \theta x^2 + aZ$, $a$ ($a>0$) connu, $\theta$ ($\theta \in \mathbb{R}$) inconnu,  $Z$ une variable aléatoire ($Z \leadsto \mathscr{N}(0,1)$).
 
 ## Estimation du paramètre $\theta$
 
@@ -246,36 +246,71 @@ La démonstration du livret du module 2 du cours (page 98), démontre la régula
 
 En posant $\theta_0 = 0$, $\theta_1 = \theta$ , $\sigma = a$ et $x'_{i} = x_{i}^{2}$, on retrouve le même modèle statistique associé plus haut à $\underline{Y}_n$. Ainsi le modèle de $\underline{Y}_n$ est régulier.
 
-### Calcul de la borne de Cramer-Rao pour $\theta$
-
-Pour $\theta$ on a la borne de Cramer-Rao suivante :
-\[I_{\underline{X}_n}(\theta)^{-1}= \frac{a^2}{nS^2_{\underline{X}_n}}\]
-
 ### Calcul de l'EMV $\hat{\theta}_n$
 
-On a :
+Selon le théorème de Gauss-Markov, on a :
 
-\[EMV \space \hat{\theta}_n = \frac{\sum_{i=1}^{n}(x_i^2 - \overline{x_n^2})(Y_n - Y_i)}{nS_{X_n}^2}\]
+\[\hat{\theta}_n = \frac{\sum_{i=1}^{n} ( x_i^2 - \overline{{x_n}^2} ) (Y_{x_i} - Y_{\underline{X}_n})}{n S_{\underline{X}_n}^2}\]
 
-**??? Montrer que c'est une EMM e $\theta$???**
+avec :
+
+\[\overline{{x_n}^2} = \frac{\sum_{i=1}^{n} x_i^2}{n}\]
+et
+\[S_{\underline{X}_n}^2 = \frac{\sum_{i=1}^{n} ( x_i^2 - \overline{{x_n}^2} )^2}{n}\]
+
+```{r 3_hat_theta, echo=FALSE, results='hide'}
+hatteta <- "TODO"
+#hatteta <- round(hatteta, digits = 3)
+```
+
+Après application numérique, on calcule ainsi : $\hat{\theta}_n =$ `r hatteta`.
 
 ### Démonstration de $\hat{\theta}_n$ en tant qu'estimateur efficace de $\theta$
 
+Le modèle statistique étant régulier et les distributions d'échantillonnage normales, nous savons (selon le chapitre 2 du livret du module 2 du cours) que les EMV fournissent des estimateurs consistants efficaces ou asymptotiquement efficaces. <!--extrait p89 du ivret du module 2 du cours-->
+
+Ainsi l'EMV $\hat{\theta}_n$ est un estimateur efficace de $\theta$.
+
+### Calcul de la borne de Cramer-Rao pour $\theta$
+
+La borne Cramér-Rao exprime une borne inférieure sur la variance d'un estimateur sans biais, basée sur l'information de Fisher ($I$) (selon [stats.stackexchange.com](https://stats.stackexchange.com/questions/461035/cram%c3%a9r-rao-lower-bound-with-an-uncertain-observable)).
+
+Or on sait que ce modèle statistique est régulier, et que le livret du module 2 du cours (page 89) définit $\hat{\theta}_n$ en tant qu'estimateur efficace de $\theta$, tel que :
+\[\hat{\theta}_n \leadsto \mathscr{N}(\theta, \frac{a^2}{nS^2_{\underline{X}_n}})\]
+
+Ainsi, on peut écrire la borne Cramér-Rao pour $\theta$ telle que : 
+\[I_{\underline{X}_n}(\theta)^{-1} = \frac{a^2}{nS^2_{\underline{X}_n}}\]
+
+```{r 3_cramer_rao, echo=FALSE, results='hide'}
+cramerrao <- "TODO"
+#cramerrao <- round(cramerrao, digits = 3)
+```
+
+Après application numérique, on calcule ainsi : $I_{\underline{X}_n}(\theta)^{-1} =$ `r cramerrao`.
 
 ### Identification de la loi de $\hat{\theta}_n$
 
 On a $\hat{\theta}_n$ tel que : 
-\[\hat{\theta}_n \leadsto N(\theta_1, \frac{a^2}{nS^2_{\underline{X}_n}})\]
+\[\hat{\theta}_n \leadsto \mathscr{N}(\theta_1, \frac{a^2}{ nS^2_{\underline{X}_n} })\]
 
 ### Calcul d'un intervalle de confiance ($IC$) de niveau $1-\alpha$ pour $\theta$
 
-Soit l'intervalle de confiance ($IC$) de $\hat{\theta}_n$ tel que : 
+Le livret du module 2 du cours (page 90), définit l'intervalle de confiance ($IC$) du paramètre $\theta$ tel que : 
 
-**??IC de $\hat{\theta_n}$ et non $\theta$ ???**
+\[IC^{1-\alpha}_{Y_{\underline{X}_{n}}}(\theta) =  \left[ \hat{\theta}_n - Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} ; \hat{\theta}_n + Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}}  \right]\]
 
-\[IC^{1-\alpha}_{Y_{\underline{X}_{n}}}(\theta) =  \left[ \theta - Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} ; \theta + Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}}  \right]\]
+```{r 3_ic_theta, echo=FALSE, results='hide'}
+ICGtheta <- "TODO"
+#ICGtheta <- round(ICGtheta, digits = 3)
+ICDtheta <- "TODO"
+#ICDtheta <- round(ICDtheta, digits = 3)
+```
+
+Après application numérique, on trouve : $IC^{1-\alpha}_{Y_{\underline{X}_{n}}}(\theta) = [$ `r ICGtheta` $;$ `r ICDtheta` $]$.
 
 ## Estimation ponctuelle du paramètre $\theta$
+
+On pose suppose $a = 0.5$. 
 
 ### Description des données
 
@@ -286,8 +321,6 @@ d3 <- read_delim("../data/donnees.exo3.csv",
     trim_ws = TRUE, show_col_types = FALSE)
 d3 <- select(d3, x, y)
 ```
-
-L'effectif des données est de `r dim(d3)[1]`.
 
 ```{r 3_correlation, echo=FALSE, results='hide'}
 d3 <- dplyr::mutate(d3, x2 = d3$x * d3$x)
@@ -302,6 +335,8 @@ conf.int.level <- 0.95
 cor.method <- "pearson"
 ```
 
+L'effectif des données est de `r dim(d3)[1]`.
+
 Dans la table suivante on présente les données nécessaires à l'étude du modèle de régression linéaire :
 
 ```{r 3_data_description, echo=FALSE}
@@ -311,7 +346,7 @@ colnames(d3_temp) <- c("$x_{i}$", "$x_{i}^{2}$", "$y_{i}$")
 kable(x=t(d3_temp), digits = 3)
 ```
 
-Le graphique, ci-dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x^2$, tel que $Y = ax² + b$ avec $a=$`r a_coeff` et $b=$`r b_coeff`, calculés avec la méthode de corrélation de `r cor.method` et avec un intervalle de confiance de `r conf.int.level`.
+Le graphique, ci-dessous illustre le modèle aléatoire suivant : $Y = \theta x^2 + aZ$,  soulignant la relation linéaire entre $Y$ et $x^2$, tel que $Y = ax² + b$ avec $a=$ `r a_coeff` et $b=$ `r b_coeff`, calculés avec la méthode de corrélation de `r cor.method` et avec un intervalle de confiance de `r conf.int.level`.
 
 ```{r 3_graph, echo=FALSE, fig.asp = .63}
 # http://www.sthda.com/english/wiki/correlation-test-between-two-variables-in-r#visualize-your-data-using-scatter-plots
@@ -357,13 +392,12 @@ Par ailleurs, on obtient un écart résiduel non nul, en effet, on a :
 
 \[ \left[ \theta - Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} ;  \theta + Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} \right]  \space : (3)\]
 
-Or on support que l'écart-type ($a$) est tel que $a = 0,5$, ainsi :
+Or on suppose que l'écart-type ($a$) est tel que $a = 0.5$, ainsi :
 
 \[(3) \space \Leftrightarrow \left[ 0,7637 - 1,96 \times \sqrt{\frac{0,5^2}{656,906}} ; 0,7637 + 1,96 \times \sqrt{\frac{0,5^2}{656,906}}
  \right]\]
 
 \[(3) \space \Leftrightarrow \left[ 0,7254 ; 0,8019 \right]\]
-
 
 ### Evaluation d'une évolution significative de $\theta$
 
