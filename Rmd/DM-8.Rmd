@@ -22,13 +22,14 @@ knitr::opts_chunk$set(
 
 ## Préparation de l'environnement
 
-R et Rstudio seront utilisés pour la rédaction de ce DM, ainsi que les packages suivants :
+R et Rstudio seront utilisés pour la rédaction de ce DM en Rmarkdown, ainsi que les packages suivants :
 
 ```{r packages_loading, results='hide'}
 library(readr)
 library(dplyr)
 library(ggplot2)
 library(knitr)
+library(ggpubr)
 ```
 
 \newpage
@@ -141,11 +142,6 @@ On peut vérifer cette négation, avec l'estimateur $W^{-\alpha}_{\underline{X}_
 \newpage
 
 # Exercice 2
-
-```{r 2_cleaning, echo=FALSE, results='hide'}
-rm(list = ls(all = TRUE))
-data.frame(unlist("all"))
-```
 
 ## Contexte
 
@@ -296,43 +292,52 @@ d3 <- read_delim("../data/donnees.exo3.csv",
     delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ","), 
     trim_ws = TRUE, show_col_types = FALSE)
 d3 <- select(d3, x, y)
-
-#https://bookdown.org/yihui/rmarkdown-cookbook/kable.html
-kable(x=d3, col.names=c("eee","$\theta$"))
 ```
 
 L'effectif des données est de `r dim(d3)[1]`.
 
-La table suivante résume la dispersion de nos données :
-
-```{r 3_data_description, echo=FALSE}
-summary(d3)
-```
-**TODO : ne pas afficher output de la commande summary mais seulement ce qui nous interresse (ici moyenne)**
-**TODO : la prof ne veut pas le summary, mais les données brutes avec une autre colonne : x2**
-
 ```{r 3_correlation, echo=FALSE, results='hide'}
 d3 <- dplyr::mutate(d3, x2 = d3$x * d3$x)
+d3 <- dplyr::select(d3, x, x2, y)
 # regression line (y~x)
-Dr<-lm(formula = d3$y~d3$x2)
-a_coeff <- round(Dr$coefficients[2], digits = 2)
-b_coeff <- round(Dr$coefficients[1], digits = 2)
+lm<-lm(formula = d3$y~d3$x2)
+a_coeff <- round(lm$coefficients[2], digits = 2)
+b_coeff <- round(lm$coefficients[1], digits = 2)
 model<-paste0("Y = ", a_coeff,"x² + ", b_coeff)
+# ggscatter parameters
+conf.int.level <- 0.95
+cor.method <- "pearson"
 ```
 
+Dans la table suivante on présente les données nécessaires à l'étude du modèle de régression linéaire :
 
-Le graphique, ci-dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x^2$, tel que $Y = ax² + b$ avec $a=$`r a_coeff` et $b=$`r b_coeff`.
+```{r 3_data_description, echo=FALSE}
+# https://bookdown.org/yihui/rmarkdown-cookbook/kable.html
+d3_temp <- d3
+colnames(d3_temp) <- c("$x_{i}$", "$x_{i}^{2}$", "$y_{i}$")
+kable(x=t(d3_temp))
+```
 
-**??? supprimer les estimations $a$ et $b$ ci dessus ??? non on peut laisser selon la prof, mais ajouter qu'ils ont été calculé avec Pearson**
+Le graphique, ci-dessous illustre le modèle aléatoire suivant $Y = \theta x^2 + aZ$  soulignant la relation linéaire entre $Y$ et $x^2$, tel que $Y = ax² + b$ avec $a=$`r a_coeff` et $b=$`r b_coeff`, calculés avec la méthode de corrélation de `r cor.method` et avec un intervalle de confiance de `r conf.int.level`.
 
 ```{r 3_graph, echo=FALSE, fig.asp = .63}
 # http://www.sthda.com/english/wiki/correlation-test-between-two-variables-in-r#visualize-your-data-using-scatter-plots
-library("ggpubr")
 ggscatter(d3, x = "x2", y = "y", 
           add = "reg.line", conf.int = TRUE, 
-          cor.coef = TRUE, cor.method = "pearson",
+          cor.coef = TRUE, cor.method = cor.method,
+          conf.int.level =  conf.int.level,
           title = model,
-          xlab = "Agent A (x²)", ylab = "Espèce E (Y)")
+          xlab = "Agent A (x²)", ylab = "Espèce E (Y)",
+          color="blue")
+```
+
+Avec un R si grand, on peut supposer l'intensité de liaison entre $Y$ et $x^2$ très forte. En effet, on a : 
+
+```{r 3_x2_coef, echo=FALSE}
+lmsum <- as.data.frame(coef(summary(lm)))
+lmsum <- lmsum[2,]
+rownames(lmsum) <- c("$x_{i}^{2}$")
+kable(lmsum, digits = 3)
 ```
 
 ### Calcul d'une estimation ponctuelle de $\theta$

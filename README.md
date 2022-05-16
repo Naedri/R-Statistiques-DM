@@ -30,8 +30,8 @@ Puis installez les packages suivants à partir de la console R :
 ## Rtools
 install.packages("rtools")
 ## code style stuff
-install.packages('styler')
-install.packages('lintr')
+install.packages("styler")
+install.packages("lintr")
 ## dev tools
 install.packages("tidyverse")
 ## plot tools for beginners in R programming 
@@ -39,7 +39,8 @@ install.packages("ggpubr")
 ## markdown stuff
 install.packages("knitr")
 install.packages("rmarkdown") 
-install.packages('tinytex')
+install.packages("tinytex")
+install.packages("formatR")
 # Install TinyTeX
 tinytex::install_tinytex()
 ```
@@ -55,7 +56,7 @@ Lorsque la session est terminée, quittez R Studio. Si une fenêtre contextuelle
 - Visualisations intéractives
   - générale :  [seeing-theory](https://seeing-theory.brown.edu/)
   - intervalles de confiance : [rpsychologist](https://rpsychologist.com/viz)
-- Rédaction en markdown : [Analyses et modélisation des données écologiques](https://pmarchand1.github.io/ECL7102/)
+- Rédaction en markdown : [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) et [Analyses et modélisation des données écologiques](https://pmarchand1.github.io/ECL7102/)
 
 ## Méthodologie
 
@@ -63,7 +64,7 @@ La démarche générale qui sera suivie pour la réalisation des tests statistiq
 1. Poser un modèle : quelle(s) variables sont étudiées ? Quelles sont leur loi ? Comment traduire la question en terme de paramètres du modèle ?
 2. Formulation des hypothèses H0/H1.
 3. Choix d'une statistique de test et détermination de sa loi sous H0.
-4. Choix du risque de première espèce α (appelé aussi niveau) et dé?nition de la zone de rejet
+4. Choix du risque de première espèce α (appelé aussi niveau) et définition de la zone de rejet
 5. Calcul de la valeur observée de la statistique
 6. Calcul de la p-value
 7. Conclusion statistique (rejet ou non rejet de H0) et biologique (réponse à la question posée)
