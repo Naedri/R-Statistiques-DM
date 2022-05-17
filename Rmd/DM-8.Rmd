@@ -162,7 +162,8 @@ Dans notre observation ponctuelle (lot), on a observé que la proportion de piè
 ## Point de vue du fabricant ($TH_1$)
 
 ### Test d'hypothèses
-Le fabricant craint par dessus tout le rejet à tort de sa production, p_0 \le 0,1.
+Le fabricant craint par dessus tout le rejet à tort de sa production, $p_0 \le 0,1$.
+
 Son test est donc :
 
 \[H_0 : p_0 \le 0,1 \text{ contre } H_1 : p_0 > 0,1\]
@@ -185,7 +186,8 @@ Donc jusqu'à preuve du contraire, la garantie du fabricant est vraie.
 
 ### Test d'hypothèses
 
-Le client va appliquer le principe de précaution, il craint de rejeter à tort p_0 \ge 0,1.
+Le client va appliquer le principe de précaution, il craint de rejeter à tort $p_0 \ge 0,1$.
+
 Son test est donc :
 
 \[H_0 : p_0 \ge 0,1 \text{ contre } H_1 : p_0 < 0,1\]
