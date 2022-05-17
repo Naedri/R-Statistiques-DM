@@ -149,13 +149,13 @@ Soit $X$, une variable aléatoire discrète représentant le nombre de pièces d
 
 On souhaite savoir si le client acceptera cet echantillon, et pour cela il faut qu'il contienne au moins 120 composants fonctionnels.
 
-## Description du modèle de données
+### Description du modèle de données
 
 Notre échantillonnage aléatoire est simple tel que : $X_{n} = (X_{i})_{1 \le i \le n}$ avec le modèle suivant : $({0,1}( \mathscr{B}(1,p)_{p})_{p \in [0,1]})$ sachant $p = 10\% = 0,1$.
 
 On va comparer ce paramètre avec une estimation ponctuelle, afin de savoir si l'affirmation du fabricant est vraie. Pour cela nous allons réaliser deux tests : le premier du point de vue du fabricant ($TH_1$), le second du point de vue du client ($TH_2$).
 
-## Observation ponctuelle
+### Observation ponctuelle
 
 Dans notre observation ponctuelle (lot), on a observé que la proportion de pièces défectueuses est de `r round(12/140, digits=4)` ($= 12/140$).
 
@@ -206,7 +206,7 @@ Pour le $TH_2$, on ne rejette pas l'hypothèse $H_0$ jusqu'à preuve du contrair
 
 Donc le principe de précaution du point de vue du client, conclue jusqu'à preuve du contraire, que la garantie du fabricant est fausse.
 
-## Commentaires
+## Réponse
 
 Les deux points de vue n'aboutissent pas à la même conclusion. Il faudrait augmenter la taille de l'échantillon et revoir l'hypothèse du modèle.
 
