@@ -69,7 +69,7 @@ p + ggtitle("Histogramme des sinistres") + xlab("Nombre de sinistre(s) par indiv
 L'effectif de l'échantillon est de `r dim(d1)[1]`.
 A partir de $\overline{X}_{n} = \frac{\sum_{i=0}^n x_i}{n} =$ `r round(x=overlineXn, digits=2)`, on a $n \overline{X}_{n} =$ `r n*overlineXn`.
 
-## Intervalle de confiance ($IC$) unilatéral pour $\lambda$
+### Intervalle de confiance ($IC$) unilatéral pour $\lambda$
 
 Pour rechercher une estimation de $\lambda$, on peut utiliser, à distance finie, la fonction pivotale $n \overline{X}_n$ qui suit une loi de Poisson de paramètre $n \lambda$ : $n \overline{X}_n \leadsto \mathscr{P}_{n\lambda}$.
 
@@ -90,7 +90,7 @@ On en déduit donc un intervalle de confiance par excès ($IC_2$) asymptotique, 
 
 Dans la suite de cet exercice, nous utiliserons l'$IC_2$ pour l'estimation du paramètre $\lambda$.
 
-### 1. Calcul d'un interval de confiance asymptotique unilatéral gauche de niveau 95% pour $\lambda$ ($IC_g$)
+## 1. Calcul d'un interval de confiance asymptotique unilatéral gauche de niveau 95% pour $\lambda$ ($IC_g$)
 
 On obtient un $IC_g$ tel que : 
 
@@ -99,7 +99,7 @@ On obtient un $IC_g$ tel que :
 \[(1) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,543 - 1,96 \times \sqrt{\frac{0,543}{35}} <  \lambda \right] \]
 \[(1) \space \Leftrightarrow IC^{0,95 \text{, asymp}}_{\underline{X}_{n}}(\lambda) = \left[0,298 <  \lambda \right] \]
 
-### 2. Calcul d'un interval de confiance asymptotique unilatéral droit de niveau 95% pour $\lambda$ ($IC_d$)
+## 2. Calcul d'un interval de confiance asymptotique unilatéral droit de niveau 95% pour $\lambda$ ($IC_d$)
 
 On obtient un $IC_d$ tel que : 
 
@@ -110,9 +110,9 @@ On obtient un $IC_d$ tel que :
 
 ### Commentaires
 
-L'utilisation d'intervalles de confiance unilatéraux est inadapté pour les lois symétriques comme la loi normale, si nous en avions eu la possibilité, il aurait fallu utiliser l'$IC_1$.
+L'utilisation d'intervalles de confiance unilatéraux est inadapté pour les lois symétriques comme la loi normale. Si nous en avions eu la possibilité, il aurait fallu utiliser l'$IC_1$.
 
-## Peut-on accepter l’hypothèse que $\lambda = 1$ ? 
+## 3. Peut-on accepter l’hypothèse que $\lambda = 1$ ? 
 
 Nous répondrons à cette question, en évaluant un test d'hypothèse.
 
@@ -122,7 +122,7 @@ On pose $H_0 : \lambda = 1$ contre $H_1 : \lambda \ne 1$.
 
 ### Observations
 
-On observe que selon $H_0$, on a $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$. Autrement dit $\lambda \notin \left[ 0.298;0.787 \right]$
+On observe que selon $H_0$, on a $\lambda \notin  IC_g$ et $\lambda \notin  IC_d$. Autrement dit $\lambda \notin \left[ 0.298;0.787 \right]$ et $\lambda = 1$ est en zone d'incertitude.
 
 ### Décision 
 
@@ -131,13 +131,6 @@ On rejette $H_0$, jusqu'à preuve du contraire.
 ### Conclusion 
 
 Par conséquent, on ne peut accepter l'hypothèse $\lambda = 1$, et donc on a $\lambda \ne 1$.
-
-### Commentaires
-
-On peut vérifer cette négation, avec l'estimateur $W^{-\alpha}_{\underline{X}_{n}}(\lambda)$ de la manière suivante  : 
-
-\[W^{\alpha}_{\underline{X}_{n}}(\lambda) = \left[ \frac{\underline{X}_{n}}{\overline{X}_{n}} < a_{\alpha} \right]  \space \text{ ou } \space  W^{\alpha}_{\underline{X}_{n}}(\lambda) = \left[ \overline{X}_{n} > b_{\alpha} \right]\]
-\[P_{\lambda=1} (W^{-\alpha}_{\underline{X}_{n}}(\lambda)) \le \alpha \space \text{ et } \space P_{\lambda \ne 1} (W^{\alpha}_{\underline{X}_{n}}(\lambda)) \ge \alpha\]
 
 \newpage
 
