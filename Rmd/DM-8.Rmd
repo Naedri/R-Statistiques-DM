@@ -149,19 +149,22 @@ Soit $X$, une variable aléatoire discrète représentant le nombre de pièces d
 
 On souhaite savoir si le client acceptera cet echantillon, et pour cela il faut qu'il contienne au moins 120 composants fonctionnels.
 
-## Description du modèle de données
+### Description du modèle de données
 
 Notre échantillonnage aléatoire est simple tel que : $X_{n} = (X_{i})_{1 \le i \le n}$ avec le modèle suivant : $({0,1}( \mathscr{B}(1,p)_{p})_{p \in [0,1]})$ sachant $p = 10\% = 0,1$.
 
 On va comparer ce paramètre avec une estimation ponctuelle, afin de savoir si l'affirmation du fabricant est vraie. Pour cela nous allons réaliser deux tests : le premier du point de vue du fabricant ($TH_1$), le second du point de vue du client ($TH_2$).
 
-## Observation ponctuelle
+### Observation ponctuelle
 
 Dans notre observation ponctuelle (lot), on a observé que la proportion de pièces défectueuses est de `r round(12/140, digits=4)` ($= 12/140$).
 
 ## Point de vue du fabricant ($TH_1$)
 
 ### Test d'hypothèses
+Le fabricant craint par dessus tout le rejet à tort de sa production, $p_0 \le 0,1$.
+
+Son test est donc :
 
 \[H_0 : p_0 \le 0,1 \text{ contre } H_1 : p_0 > 0,1\]
 
@@ -169,7 +172,7 @@ Dans notre observation ponctuelle (lot), on a observé que la proportion de piè
 \[(3) \space \Leftrightarrow W^{0,05 \text{, asymp}}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1 + \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
 \[(3) \space \Leftrightarrow W^{0,05 \text{, asymp}}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1496 \right\} \]
 
-### Observations
+### Conclusion
 
 \[\frac{\underline{X}_{n}}{\overline{X}_{n}} = 0,0857 \notin W^{\alpha \text{, asymp}}_{X_n}(p)\]
 
@@ -177,13 +180,15 @@ Dans notre observation ponctuelle (lot), on a observé que la proportion de piè
 
 Pour le $TH_1$, on ne rejette pas l'hypothèse $H_0$ jusqu'à preuve du contraire.
 
-### Conlcusion
-
-Jusqu'à preuve du contraire, le client acceptera le lot.
+Donc jusqu'à preuve du contraire, la garantie du fabricant est vraie.
 
 ## Point de vue du client ($TH_2$)
 
 ### Test d'hypothèses
+
+Le client va appliquer le principe de précaution, il craint de rejeter à tort $p_0 \ge 0,1$.
+
+Son test est donc :
 
 \[H_0 : p_0 \ge 0,1 \text{ contre } H_1 : p_0 < 0,1\]
 
@@ -191,26 +196,23 @@ Jusqu'à preuve du contraire, le client acceptera le lot.
 \[(3) \space \Leftrightarrow W^{0,05 \text{, asymp}}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,1 - \frac{1,96}{\sqrt{140}} \times \sqrt{0,1(1-0,1)} \right\} \]
 \[(3) \space \Leftrightarrow W^{0,05 \text{, asymp}}_{140}(p) = \left\{ \frac{\underline{X}_{n}}{\overline{X}_{n}} > 0,0503 \right\} \]
 
-### Observations
+### Conclusion
 
 \[\frac{\underline{X}_{n}}{\overline{X}_{n}} = 0,0857 \notin W^{\alpha \text{, asymp}}_{X_n}(p)\]
 
 ### Décision
 
-Pour le $TH_2$, on accepte donc $H_0$.
+Pour le $TH_2$, on ne rejette pas l'hypothèse $H_0$ jusqu'à preuve du contraire.
 
-### Conlcusion
+Donc le principe de précaution du point de vue du client, conclue jusqu'à preuve du contraire, que la garantie du fabricant est fausse.
 
-Jusqu'à preuve du contraire, le client n'acceptera pas le lot. **??Problème de formulation ou de conclusion -> à vérifier??**
+## Réponse
 
-## Commentaires
+Les deux points de vue n'aboutissent pas à la même conclusion. Il faudrait augmenter la taille de l'échantillon et revoir l'hypothèse du modèle.
 
-L'acceptation du lot a été évaluée depuis les points de vues des deux parties.
+Cependant étant du point de vue du client, il est nécessire d'appliquer le principe de précaution et donc de privilégier le test d'hypothèse 2, $TH_2$, pour répondre à la question du devoir: "Le client acceptera ou refusera-t-il le lot ?".
 
-**On se place du point de vue du client, il ne faudrait donc pas tester $TH_2$ mais seulement $TH_1$. En effet, en se placant du côté du client, on souhaite seulement évaluer ce que craint le client de rejeter à tord.**
-**On a réalisé deux tests, si ilssont contradictaatoires => prendre le test du point de vue client.**
-
-**??? TODO : vérifier la formulation des deux tests, avec le livret de cours module 2 (page 62).????**
+Donc d'après $TH_2$, non le client n'acceptera pas le lot.
 
 \newpage
 
