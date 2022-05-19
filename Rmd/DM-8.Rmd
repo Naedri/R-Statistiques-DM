@@ -246,7 +246,6 @@ La vraisemblance du modèle est :
 Le théorème 1 du cours (p87) affirme que le modèle suivant est régulier, sa démonstration est trouvable à la page 98 du cours.
 \[( \mathbb{R}^n, \otimes_{i=1}^{n} \mathscr{N}(\theta_0 + \theta_1 x'_{i}, \sigma^2)_{(\theta_0, \theta_1, \sigma) \in \mathbb{R}^{2} \times ]0;+\infty[})\]
 
-<!--TODO dans le cours ce n'est pas x' mais simplement x.-->
 En posant $\theta_0 = 0$, $\theta_1 = \theta$ , $\sigma = a$ et $x'_{i} = x_{i}^{2}$, on retrouve le même modèle statistique associé plus haut à $\underline{Y}_n$. Ainsi le modèle de $\underline{Y}_n$ est régulier.
 
 ### Calcul de l'EMV $\hat{\theta}_n$
@@ -358,7 +357,6 @@ Ainsi à partir de l'échantillon, comme on a :
 ```{r 3_ns2Xn, echo=FALSE, results='hide'}
 
 ```
-<!--TODO :  remplacer 501,653 ; 656,906 ; 0,7637 et 2,7 par les valeurs numériques calculées plus haut car elles nous serviront pour faire le tableau-->
 \[nS_{\underline{X}_n}^2 = \sum_{i=1}^{n}(x^2 - \overline{x^2_n}) = 656.906\]
 et
 \[\sum_{i=1}^{n}(x^2 - \overline{x^2_n})(Y_{x_i} - \overline{Y_{\underline{X}_n}}) = 501.653\]
