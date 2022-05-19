@@ -224,7 +224,7 @@ Pour $x$ donné, on suppose qu'il est pertinent de représenter cette mesure par
 
 ## Estimation du paramètre $\theta$
 
-Pour estimer le paramètre $\theta$, on fait $n$ ($n \ge 1$) essais indépendants avec des doses de l’agent $A$ notées $x_1, \ldots, x_n$. De $Y$, on extrairt donc un échantillon aléatoire bernoullien : ${Y}_{\underline{X}_n} = (Y_{x_1}, \ldots, Y_{x_n})$.
+Pour estimer le paramètre $\theta$, on fait $n$ ($n \ge 1$) essais indépendants avec des doses de l’agent $A$ notées $x_1, \ldots, x_n$. De $Y$, on extrait donc un échantillon aléatoire bernoullien : ${Y}_{\underline{X}_n} = (Y_{x_1}, \ldots, Y_{x_n})$.
 
 ### Modèle statistique associé à $\underline{Y}_n$
 
@@ -236,7 +236,7 @@ La vraisemblance du modèle est :
 
 ### Régularité du modèle associé à $\underline{Y}_n$
 
-La démonstration du livret du module 2 du cours (page 98), démontre la régularité du modèle suivant : 
+Le théorème 1 du cours (p87) affirme que le modèle suivant est régulier, sa démonstration est trouvable à la page 98 du cours.
 \[( \mathbb{R}^n, \otimes_{i=1}^{n} \mathscr{N}(\theta_0 + \theta_1 x'_{i}, \sigma^2)_{(\theta_0, \theta_1, \sigma) \in \mathbb{R}^{2} \times ]0;+\infty[})\]
 
 En posant $\theta_0 = 0$, $\theta_1 = \theta$ , $\sigma = a$ et $x'_{i} = x_{i}^{2}$, on retrouve le même modèle statistique associé plus haut à $\underline{Y}_n$. Ainsi le modèle de $\underline{Y}_n$ est régulier.
@@ -255,7 +255,7 @@ et
 
 ### Démonstration de $\hat{\theta}_n$ en tant qu'estimateur efficace de $\theta$
 
-Le modèle statistique étant régulier et les distributions d'échantillonnage normales, nous savons (selon le chapitre 2 du livret du module 2 du cours) que les EMV fournissent des estimateurs consistants efficaces ou asymptotiquement efficaces. <!--extrait p89 du ivret du module 2 du cours-->
+Le modèle statistique étant régulier et les distributions d'échantillonnage suivant une loi normale, nous savons (selon le chapitre 2 du livret du module 2 du cours) que les EMV fournissent des estimateurs consistants efficaces ou asymptotiquement efficaces. <!--extrait p89 du ivret du module 2 du cours-->
 
 Ainsi l'EMV $\hat{\theta}_n$ est un estimateur efficace de $\theta$.
 
@@ -282,7 +282,7 @@ Le livret du module 2 du cours (page 90), définit l'intervalle de confiance ($I
 
 ## Estimation ponctuelle du paramètre $\theta$
 
-On pose suppose $a = 0.5$. 
+On suppose $a = 0.5$.
 
 ### Description des données
 
@@ -350,13 +350,12 @@ Ainsi à partir de l'échantillon, comme on a :
 ```{r 3_ns2Xn, echo=FALSE, results='hide'}
 
 ```
-<!--TODO :  remplacer 501,653 ; 656,906 ; 0,7637 et 2,7 par les valeurs numériques calculées plus haut car elles nous serviront pour faire le tableau-->
-\[nS_{\underline{X}_n}^2 = \sum_{i=1}^{n}(x^2 - \overline{x^2_n}) = 656,906\]
+\[nS_{\underline{X}_n}^2 = \sum_{i=1}^{n}(x^2 - \overline{x^2_n}) = 656.906\]
 et
-\[\sum_{i=1}^{n}(x^2 - \overline{x^2_n})(Y_{x_i} - \overline{Y_{\underline{X}_n}}) = 501,653\]
+\[\sum_{i=1}^{n}(x^2 - \overline{x^2_n})(Y_{x_i} - \overline{Y_{\underline{X}_n}}) = 501.653\]
 
 On peut en déduire $\hat{\theta}_{n}$, tel que : 
-\[\hat{\theta}_{n} = \theta = 0,7637\]
+\[\hat{\theta}_{n} = \theta = 0.7637\]
 
 On obtient dès lors la table suivante :
 
@@ -374,7 +373,7 @@ On pourra noter que l'on obtient un écart résiduel non nul, tel que :
 
 \[\sum_{i=1}^{n} \tilde{e_i} = 2,7\]
 
-### Calcul d'un intervalle de confiance ($IC$) de niveau 95%  pour $\theta$
+### Calcul d'un intervalle de confiance ($IC$) de niveau 95% pour $\theta$
 
 \[ \left[ \theta - Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} ;  \theta + Z_{1- \frac{\alpha}{2}} \sqrt{\frac{a^2}{nS^2_{\underline{X}_n}}} \right]  \space : (3)\]
 
@@ -387,7 +386,7 @@ Or on suppose que l'écart-type ($a$) est tel que $a = 0.5$, ainsi :
 
 ### Evaluation d'une évolution significative de $\theta$
 
-On ne souhaite ici évaluer une croissance ou une décroissance, de $\theta$ ; mais seulement savoir s'il y a une différence.
+On ne souhaite pas ici évaluer une croissance ou une décroissance, de $\theta$ ; mais seulement savoir s'il y a une différence.
 
 Ainsi, on souhaite savoir si l'on peut accepter au seuil de 5% l'hypothèse $H_1 : \theta = \theta_{passé} \Leftrightarrow H_0 : \theta = 0,9$ contre $H_1 : \theta \ne 0,9$.
 
@@ -408,8 +407,8 @@ On observe :
 
 #### Décision
 
-Au seuil de de 5%, on rejete $H_0$ jusqu'à preuve du contraire.
+Au seuil de 5%, on rejete $H_0$ jusqu'à preuve du contraire.
 
-#### Conlcusion
+#### Conclusion
 
-On en conclue que la valeur du paramètre $\theta$ a évolu significativement par rapport aux mesures précédentes.
+On en conclu que la valeur du paramètre $\theta$ a évolué significativement par rapport aux mesures précédentes.
